@@ -1,3 +1,4 @@
+import copy
 # NOTE 2: find all primes <= B
 
 def prime(number):
@@ -45,24 +46,115 @@ class Matrix_solver:
         self.matrix = []
         self.primes = primes
         # NOTE: DO NOT TAKE attempts to solve cases we alredy solve!
-        # will work later!
-        self.ban = []
+        self.ban = [[]]
         for i in range(len(primes)):
             self.matrix.append([])
 
     def add(self, smooth_number):
         for i in range(len(self.primes)):
             self.matrix[i].append(smooth_number[i])
+        for i in range(len(self.ban)):
+            self.ban[i].append(0)
 
     def log(self):
+        print "matrix:"
         for i in range(len(self.primes)):
             print self.matrix[i]
+        print "ban list:"
+        for i in range(len(self.ban)):
+            print self.ban[i]
 
-def make_matrix_smooth(smooth_numbers,primes):
-    matrix = []
-    for i in range(len(primes)):
-        piv = []
-        for j in range(len(smooth_numbers)):
-            piv.append(smooth_numbers[j][2][i])
-        matrix.append(piv)
-    return matrix
+    def update_ban(self,ban_list):
+        for b in ban_list:
+            self.ban.append(copy.copy(b))
+
+def perm_find(arr, pos):
+    if None not in arr:
+        return [arr]
+    if len(arr) == pos:
+        # NOTE: end of arr
+        return None
+    if arr[pos] == None:
+        a = copy.copy(arr)
+        a[pos] = 0
+        b = copy.copy(arr)
+        b[pos] = 1
+        res1 = perm_find(a, pos+1)
+        res2 = perm_find(b, pos+1)
+        if res1 != None and res2 != None:
+            return res1 + res2
+        else:
+            return [a,b]
+    else:
+        return perm_find(arr, pos+1)
+
+class Gauss_Jordane:
+    def __init__(self, data, primes):
+        self.matrix = []
+        self.primes = primes
+        for i in range(len(primes)):
+            flag = False
+            for j in data.matrix[i]:
+                if j != 0:
+                    flag = True
+            if flag:
+                self.matrix.append(copy.copy(data.matrix[i]))
+
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                self.matrix[i][j] = self.matrix[i][j] % 2
+
+    def log(self):
+        print "Gauss_Jordane matrix:"
+        for i in range(len(self.matrix)):
+            print self.matrix[i]
+
+    def solve(self, ban):
+        if len(self.matrix[0]) == 0:
+            return None
+        banned_rows = []
+        for j in range(len(self.matrix[0])):
+            # print "new j"
+            curr = -1
+            for i in range(len(self.matrix)):
+                if self.matrix[i][j] == 1 and i not in banned_rows:
+                    curr = i
+                    banned_rows.append(i)
+                    break
+            if curr >= 0:
+                for i in range(len(self.matrix)):
+                    if i != curr and self.matrix[i][j] == 1:
+                        # print "summ", curr, "and", i
+                        for sum in range(j, len(self.matrix[0])):
+                            self.matrix[i][sum] = (self.matrix[i][sum] + self.matrix[curr][sum]) % 2
+            # self.log()
+        res = [None] * len(self.matrix[0])
+        for i in range(len(self.matrix)):
+            ones_in = 0
+            indexes = []
+            for j in range(len(self.matrix[0])):
+                if self.matrix[i][j] == 1:
+                    ones_in += 1
+                    indexes.append(j)
+            if ones_in == 1:
+                res[indexes[0]] = 0
+            elif ones_in == 2:
+                res[indexes[0]] = 1
+                res[indexes[1]] = 1
+
+        print "solve:", res
+        piv = perm_find(res,0)
+        res = []
+        for solve in piv:
+            if solve not in ban:
+                res.append(copy.copy(solve))
+        return res
+
+    def check(self, solve):
+        confirmed_solve = []
+        add_to_ban = []
+
+
+
+def GCD(n1,n2):
+    pass

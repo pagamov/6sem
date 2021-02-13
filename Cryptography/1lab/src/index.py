@@ -7,38 +7,39 @@ import liba
 # NOTE: 497293 = 509 * 977 primes
 # n = 497293
 n = 539873
-
 B = 19
-
 # NOTE 1: find sqrt of n and floor up
-
 start = int(floor(n**(2**-1)) + 1)
 print "start", start
-
 # NOTE 2: find all primes <= B
-
 primes = liba.find_primes(B)
 print "primes under", B, "are", primes
-
 # NOTE 3: find N such N^2 mod n are smooth under B
-
 smooth_numbers = []
 matrix = liba.Matrix_solver(primes)
-while len(smooth_numbers) <= 4:
+while len(smooth_numbers) < 4:
     piv = liba.smooth_under((start**2) % n, primes)
     if piv != None:
         matrix.add(piv)
         smooth_numbers.append([start, (start**2) % n, piv])
         print start, (start**2) % n, piv
+        # NOTE: make gauss matrix for solve
+        gaus = liba.Gauss_Jordane(matrix, primes)
+        # NOTE: solve gauss matrix mod 2 delete ban solves
+        solving = gaus.solve(matrix.ban)
+        # NOTE: check solves make addition for ban list
+        solve, ban = gaus.chech()
+        matrix.update_ban(ban)
+        print solve
     start += 1
 
-# print smooth_numbers
-
 # NOTE 4: make matrix from smooth numbers
-
 # matrix = liba.make_matrix_smooth(smooth_numbers, primes)
 
-matrix.log()
+gaus = liba.Gauss_Jordane(matrix, primes)
+
+
+print "solve", solving
 
 
 
