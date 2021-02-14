@@ -1,27 +1,20 @@
 import copy
 # NOTE 2: find all primes <= B
 
-def prime(number):
-    for i in range(2,number):
-        if number % i == 0:
-            return False
-    return True
-
-def find_primes(B):
-    res = []
-    for i in range(2, B+1):
-        if prime(i):
-            res.append(i)
-    return res
+def eratosthenes(n):
+    numbers = list(range(2, n + 1))
+    for number in numbers:
+        if number != 0:
+            for candidate in range(2 * number, n+1, number):
+                numbers[candidate-2] = 0
+    return list(filter(lambda x: x != 0, numbers))
 
 # NOTE 3: find N such N^2 are smooth under B
 
 def smooth_under(number, primes):
-    res = []
-    for i in range(len(primes)):
-        res.append(0)
+    res = [0] * len(primes)
     i = 0
-    while number != 1 and i < len(primes):
+    while number > 1 and i < len(primes):
         if number % primes[i] == 0:
             res[i] += 1
             number = number / primes[i]
@@ -64,9 +57,10 @@ class Matrix_solver:
         for i in range(len(self.ban)):
             print self.ban[i]
 
-    def update_ban(self,ban_list):
-        for b in ban_list:
-            self.ban.append(copy.copy(b))
+    def update_ban(self, ban_list):
+        # print "ban list len", len(ban_list)
+        for i in range(len(ban_list)):
+            self.ban.append(ban_list[i])
 
 def perm_find(arr, pos):
     if None not in arr:
@@ -141,20 +135,55 @@ class Gauss_Jordane:
             elif ones_in == 2:
                 res[indexes[0]] = 1
                 res[indexes[1]] = 1
-
-        print "solve:", res
         piv = perm_find(res,0)
         res = []
+        # print "solve bf:", piv
         for solve in piv:
             if solve not in ban:
                 res.append(copy.copy(solve))
+        # print "solve af:", res
+        # print "ban:", ban, "\n"
         return res
 
     def check(self, solve):
         confirmed_solve = []
         add_to_ban = []
+        for s in solve:
+            flag = True
+            for i in range(len(self.matrix)):
+                sum = 0
+                for j in range(len(s)):
+                    sum += s[j] * self.matrix[i][j]
+                if sum % 2 != 0:
+                    # add s to ban list
+                    flag = False
+                    break
+            if flag:
+                confirmed_solve.append(copy.copy(s))
+            else:
+                add_to_ban.append(copy.copy(s))
+        # print add_to_ban
+        return confirmed_solve, add_to_ban
 
-
-
-def GCD(n1,n2):
-    pass
+def GCD(m,n):
+    mult = 1
+    while True:
+        if m == 0 or n == 0 or m == n:
+            return mult*max(n,m)
+        if m == 1 or n == 1:
+            return mult*1
+        if m % 2 == 0 and n % 2 == 0:
+            mult *= 2
+            m = m/2
+            n = n/2
+        if m % 2 == 0 and n % 2 != 0:
+            m = m/2
+        if m % 2 != 0 and n % 2 == 0:
+            n = n/2
+        if m % 2 != 0 and n % 2 != 0:
+            if n > m:
+                piv = (n-m)/2
+                n = m
+                m = piv
+            elif n < m:
+                m = (m-n)/2

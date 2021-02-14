@@ -1,45 +1,75 @@
 from math import *
+from fractions import gcd
 from random import randint
 import liba
+import copy
+import decimal
 # n = 160769357899975610828199539114109518167531134514190990785144666932076614717841
-# n = 160769357899975610828199539114109518167531134514190990785144666932076614717841
-
-# NOTE: 497293 = 509 * 977 primes
-# n = 497293
-n = 539873
+# n = 1250171497372227982026555999675170108947918951378367343470923483104158597216632066586300921566811265776465427395026458151240042366061271512107752586681699923914902061886213022544496783070727061083763996630816279869169194623169255711135422521925444135939014878277515299870536875962948267973899545621728547726545192382593936985574978881305949487523233148677106330650818223443955800622774189936635106363035784698216185461573761714766211607812695281252356674432444279
 B = 19
+n = 23687 * 12613
 # NOTE 1: find sqrt of n and floor up
-start = int(floor(n**(2**-1)) + 1)
+start = long(decimal.Decimal(n).sqrt() + 1)
 print "start", start
 # NOTE 2: find all primes <= B
-primes = liba.find_primes(B)
-print "primes under", B, "are", primes
+primes = liba.eratosthenes(B)
+print "primes done", len(primes)
 # NOTE 3: find N such N^2 mod n are smooth under B
 smooth_numbers = []
 matrix = liba.Matrix_solver(primes)
-while len(smooth_numbers) < 4:
+while True:
     piv = liba.smooth_under((start**2) % n, primes)
     if piv != None:
         matrix.add(piv)
         smooth_numbers.append([start, (start**2) % n, piv])
-        print start, (start**2) % n, piv
         # NOTE: make gauss matrix for solve
         gaus = liba.Gauss_Jordane(matrix, primes)
         # NOTE: solve gauss matrix mod 2 delete ban solves
         solving = gaus.solve(matrix.ban)
+        # print "gauss matrix", str(len(gaus.matrix)) + "x" + str(len(gaus.matrix[0]))
         # NOTE: check solves make addition for ban list
-        solve, ban = gaus.chech()
+        solve, ban = gaus.check(solving)
+        print "b", ban
         matrix.update_ban(ban)
-        print solve
+        if len(solve) != 0:
+            for s in solve:
+                left = []
+                right = []
+                for i in range(len(s)):
+                    if s[i] == 1:
+                        left.append(smooth_numbers[i][0])
+                        right.append(copy.copy(smooth_numbers[i][2]))
+
+                true_left = 1
+                for i in left:
+                    true_left *= i
+
+                true_right = 1
+                if len(right) != 0:
+                    right_piv = [0] * len(primes)
+                    for r in right:
+                        for j in range(len(primes)):
+                            right_piv[j] += r[j]
+                    for j in range(len(right_piv)):
+                        right_piv[j] = right_piv[j] / 2
+                    for j in range(len(right_piv)):
+                        true_right *= primes[j]**right_piv[j]
+
+                gcd = min(liba.GCD(true_left+true_right, n), liba.GCD(true_left-true_right, n))
+                if gcd > 1:
+                    if n / gcd * gcd == n:
+                        print "ANS", gcd , n/gcd, n
+                        exit()
+    # start += randint(1,10)
     start += 1
 
 # NOTE 4: make matrix from smooth numbers
 # matrix = liba.make_matrix_smooth(smooth_numbers, primes)
 
-gaus = liba.Gauss_Jordane(matrix, primes)
-
-
-print "solve", solving
+# gaus = liba.Gauss_Jordane(matrix, primes)
+#
+#
+# print "solve", solving
 
 
 
