@@ -11,55 +11,62 @@ def Factor(n, B):
     print len(primes.p)
     smooth_numbers = []
     matrix = Matrix_solver(primes)
-    # x = 1
-    t = time()
-    ansl = 0
-    for ran in range(0,1000000,10000):
-        ans = smooth_region(ran,ran+10000,q,primes)
-        ansl += len(ans)
+    # t = time()
+    # ansl = 0
+    # for ran in range(0,1000000,10000):
+    #     ans = smooth_region(ran,ran+10000,q,primes)
+    #     ansl += len(ans)
+    #
+    # print ansl, time() - t
+    # t = time()
+    # ans = []
+    # # primes = eratosthenes(B)
+    # print len(primes)
+    # for i in range(0,1000000):
+    #     piv = smooth_under(q(i), primes.p)
+    #     if piv != None:
+    #         ans.append(piv)
+    # print len(ans), time() - t
+    # exit()
 
-    print ansl, time() - t
-    t = time()
-    ans = []
-    # primes = eratosthenes(B)
-    print len(primes)
-    for i in range(0,1000000):
-        piv = smooth_under(q(i), primes.p)
-        if piv != None:
-            ans.append(piv)
-    print len(ans), time() - t
-    exit()
+    step = 10**3
+    x = 0
+    k = 1
 
-    ans = []
-    L = 100000
-    while len(ans)+1 < len(primes):
-        ans = smooth_region(-L,L,q,primes)
-        L*=10
-        print "\r",L,len(ans)
+    smooth_numbers = []
+    while True:
+        ans = smooth_region(x+((k-1)*step),x+(k*step),q,primes)
+        print len(ans),x+((k-1)*step),x+(k*step)
+        smooth_numbers += ans
+        for i in range(len(ans)):
+            matrix.add(ans[i][2])
+        ans = smooth_region(x-(k*step),x-((k-1)*step),q,primes)
+        print len(ans),x-(k*step),x-((k-1)*step)
+        smooth_numbers += ans
+        for i in range(len(ans)):
+            matrix.add(ans[i][2])
+        k+=1
 
-    # for i in range(len(primes)+1):
-    #     matrix.add(ans[i][2])
-    # smooth_numbers = ans
-    # if len(smooth_numbers) > 0:
-    #     solve = perm_find(matrix.solve(),0)
-    #     print "perm found"
-    #     for s in solve:
-    #         left = 1
-    #         right = []
-    #         for i in range(len(s)):
-    #             if s[i] == 1:
-    #                 left *= smooth_numbers[i][0]
-    #                 right.append(copy.copy(smooth_numbers[i][2]))
-    #         true_right = 1
-    #         right_piv = [0] * len(primes)
-    #         for r in right:
-    #             for j in range(len(primes)):
-    #                 right_piv[j] += r[j]
-    #         for j in range(len(right_piv)):
-    #             right_piv[j] = right_piv[j] / 2
-    #         for j in range(len(right_piv)):
-    #             true_right *= primes[j]**right_piv[j]
-    #         gcd = min(GCD(left+true_right, n), GCD(left-true_right, n))
-    #         if gcd > 1 and n / gcd * gcd == n:
-    #             return [gcd, n/gcd]
+        if len(smooth_numbers) > 0:
+            solve = perm_find(matrix.solve(),0)
+            print "perm found"
+            for s in solve:
+                left = 1
+                right = []
+                for i in range(len(s)):
+                    if s[i] == 1:
+                        left *= smooth_numbers[i][0]
+                        right.append(copy.copy(smooth_numbers[i][2]))
+                true_right = 1
+                right_piv = [0] * len(primes)
+                for r in right:
+                    for j in range(len(primes)):
+                        right_piv[j] += r[j]
+                for j in range(len(right_piv)):
+                    right_piv[j] = right_piv[j] / 2
+                for j in range(len(right_piv)):
+                    true_right *= primes(j)**right_piv[j]
+                gcd = min(GCD(left+true_right, n), GCD(left-true_right, n))
+                if gcd > 1 and n / gcd * gcd == n:
+                    return [gcd, n/gcd]
     return [None, None]
