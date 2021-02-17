@@ -11,30 +11,11 @@ def Factor(n, B):
     print len(primes.p)
     smooth_numbers = []
     matrix = Matrix_solver(primes)
-    # t = time()
-    # ansl = 0
-    # for ran in range(0,1000000,10000):
-    #     ans = smooth_region(ran,ran+10000,q,primes)
-    #     ansl += len(ans)
-    #
-    # print ansl, time() - t
-    # t = time()
-    # ans = []
-    # # primes = eratosthenes(B)
-    # print len(primes)
-    # for i in range(0,1000000):
-    #     piv = smooth_under(q(i), primes.p)
-    #     if piv != None:
-    #         ans.append(piv)
-    # print len(ans), time() - t
-    # exit()
-
-    step = 10**3
+    step = 10**5
     x = 0
     k = 1
-
     smooth_numbers = []
-    while True:
+    while x+((k-1)*step) < start:
         ans = smooth_region(x+((k-1)*step),x+(k*step),q,primes)
         print len(ans),x+((k-1)*step),x+(k*step)
         smooth_numbers += ans
@@ -47,16 +28,17 @@ def Factor(n, B):
             matrix.add(ans[i][2])
         k+=1
 
-        if len(smooth_numbers) > 0:
+        if len(smooth_numbers) > len(primes):
             solve = perm_find(matrix.solve(),0)
             print "perm found"
             for s in solve:
+                print s
                 left = 1
                 right = []
                 for i in range(len(s)):
                     if s[i] == 1:
                         left *= smooth_numbers[i][0]
-                        right.append(copy.copy(smooth_numbers[i][2]))
+                        right.append(smooth_numbers[i][2])
                 true_right = 1
                 right_piv = [0] * len(primes)
                 for r in right:

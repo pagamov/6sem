@@ -220,7 +220,7 @@ def smooth_region(L1, L2, q, primes):
     ans = []
     for i in range(len(res)):
         if abs(res[i][1]) == 1:
-            ans.append(res[i])
-    # for i in range(len(primes)):
-    #     print primes(i), s[i]
+            ans.append([res[i][0],q(res[i][0]),res[i][2]])
+    # for i in range(len(ans)):
+    #     print ans[i]
     return ans
