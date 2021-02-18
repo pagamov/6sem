@@ -3,7 +3,7 @@ class Matrix_solver:
     def __init__(self, primes):
         # NOTE: matrix for storage i:primes j:x1,x2,x3,...,xn
         self.matrix = []
-        self.primes = primes.p
+        self.primes = primes
         self.gaus = []
         # NOTE: DO NOT TAKE attempts to solve cases we alredy solve!
         # self.ban = [[]]
@@ -39,14 +39,36 @@ class Matrix_solver:
                     flag = True
             if flag:
                 self.gaus.append(copy.copy(self.matrix[i]))
-        
         for i in range(len(self.gaus)):
             for j in range(len(self.gaus[i])):
                 self.gaus[i][j] = self.gaus[i][j] % 2
         # NOTE: solve
-
         if len(self.gaus[0]) == 0:
             return None
+        lineal_rows = []
+        for i in range(len(self.gaus[0])):
+            lineal_rows.append([i])
+
+        for i in range(len(self.gaus)):
+            print self.gaus[i]
+
+        # for i in range(len(lineal_rows)):
+        #     print lineal_rows[i]
+
+
+        banned_rows = []
+        for j in range(len(self.gaus[0])):
+            curr = -1
+            for i in range(len(self.gaus)):
+                if self.gaus[i][j] == 1 and i not in banned_rows:
+                    curr = i
+                    banned_vert.append(i)
+                    break
+            if curr >= 0:
+                
+
+
+
         banned_rows = []
         for j in range(len(self.gaus[0])):
             # print "new j"

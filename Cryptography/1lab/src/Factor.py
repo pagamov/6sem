@@ -5,12 +5,24 @@ def Factor(n, B):
     from Matrix_solver import Matrix_solver
     from lib import smooth_under,perm_find,GCD,Q,smooth_region,eratosthenes
 
+
+    mat = Matrix_solver([2,3,5,7])
+    mat.add([1,0,1,1])
+    mat.add([0,1,1,1])
+    mat.add([0,0,0,1])
+    mat.add([1,1,0,1])
+    mat.add([1,1,0,0])
+    ans = mat.solve()
+    print ans
+
+    exit()
+
     start = long(decimal.Decimal(n).sqrt() + 1)
     q = Q(n)
     primes = Primes(n,B,q)
     print len(primes)
     smooth_numbers = []
-    matrix = Matrix_solver(primes)
+    matrix = Matrix_solver(primes.p)
     step = 10**3
     k = 1
     smooth_numbers = []
