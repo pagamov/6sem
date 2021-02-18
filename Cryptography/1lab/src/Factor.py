@@ -8,27 +8,31 @@ def Factor(n, B):
     start = long(decimal.Decimal(n).sqrt() + 1)
     q = Q(n)
     primes = Primes(n,B,q)
-    print len(primes.p)
+    print len(primes)
     smooth_numbers = []
     matrix = Matrix_solver(primes)
-    step = 10**5
-    x = 0
+    step = 10**3
     k = 1
     smooth_numbers = []
-    while x+((k-1)*step) < start:
-        ans = smooth_region(x+((k-1)*step),x+(k*step),q,primes)
-        print len(ans),x+((k-1)*step),x+(k*step)
+    # while (k-1)*step < start:
+    while True:
+        ans = smooth_region((k-1)*step,k*step,q,primes)
+        print len(ans),(k-1)*step,k*step
         smooth_numbers += ans
         for i in range(len(ans)):
             matrix.add(ans[i][2])
-        ans = smooth_region(x-(k*step),x-((k-1)*step),q,primes)
-        print len(ans),x-(k*step),x-((k-1)*step)
+        ans = smooth_region(-k*step,-(k-1)*step,q,primes)
+        print len(ans),-k*step,-(k-1)*step
         smooth_numbers += ans
         for i in range(len(ans)):
             matrix.add(ans[i][2])
         k+=1
-
         if len(smooth_numbers) > len(primes):
+            print "len",len(smooth_numbers)
+            # for i in smooth_numbers:
+            #     print i
+            # matrix.log()
+            exit()
             solve = perm_find(matrix.solve(),0)
             print "perm found"
             for s in solve:

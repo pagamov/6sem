@@ -7,8 +7,9 @@ B = 5*1500000
 
 
 
-B = 3000
+B = 1000
 n = 104729 * 103591
+n = 977 * 903
 t = time()
 res = Factor(n,B)
 print "\nans:", res[0], res[1]
