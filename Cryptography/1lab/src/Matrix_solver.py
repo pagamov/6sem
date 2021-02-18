@@ -52,21 +52,58 @@ class Matrix_solver:
         for i in range(len(self.gaus)):
             print self.gaus[i]
 
-        # for i in range(len(lineal_rows)):
-        #     print lineal_rows[i]
+        for i in range(len(lineal_rows)):
+            print lineal_rows[i]
+
+        # exit()
 
 
         banned_rows = []
-        for j in range(len(self.gaus[0])):
-            curr = -1
+        for y in range(len(self.gaus[0])):
+            x = -1
             for i in range(len(self.gaus)):
-                if self.gaus[i][j] == 1 and i not in banned_rows:
-                    curr = i
-                    banned_vert.append(i)
+                if self.gaus[i][y] == 1 and i not in banned_rows:
+                    x = i
+                    banned_rows.append(i)
                     break
-            if curr >= 0:
-                
+            if x >= 0:
+                for j in range(len(self.gaus[0])):
+                    if j != y and self.gaus[x][j] == 1:
+                        # print "summ", y, "and", j
+                        for elem in lineal_rows[y]:
+                            if elem in lineal_rows[j]:
+                                lineal_rows[j].remove(elem)
+                            else:
+                                lineal_rows[j].append(elem)
+                        # lineal_rows[j] += lineal_rows[y]
+                        for i in range(len(self.gaus)):
+                            self.gaus[i][j] = (self.gaus[i][j] + self.gaus[i][y]) % 2
+                # for i in range(len(self.gaus)):
+                #     print self.gaus[i]
+        for i in range(len(self.gaus)):
+            print self.gaus[i]
 
+        for i in range(len(lineal_rows)):
+            print lineal_rows[i]
+
+
+        ans = []
+        for y in range(len(self.gaus[0])):
+            flag = True
+            for x in range(len(self.gaus)):
+                if self.gaus[x][y] == 1:
+                    flag = False
+                    break
+            if flag:
+                if len(lineal_rows[y]) >= 2:
+                    ans.append(lineal_rows[y])
+        # print "ans"
+        # for a in ans:
+        #     print a
+        # exit()
+        return ans
+        # for i in range(len(self.gaus)):
+        #     print self.gaus[i]
 
 
         banned_rows = []
