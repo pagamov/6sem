@@ -19,45 +19,30 @@ def Factor(n, B):
     start = long(decimal.Decimal(n).sqrt() + 1)
     q = Q(n)
     primes = Primes(n,B,q)
-    print len(primes)
+    print "primes len", len(primes)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 10**2
+    step = 10**5
     k = 1
     smooth_numbers = []
     # while (k-1)*step < start:
     while True:
         ans = smooth_region((k-1)*step,k*step,q,primes)
-        # print len(ans),(k-1)*step,k*step
+        print len(ans),(k-1)*step,k*step
         for i in range(len(ans)):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         ans = smooth_region(-k*step,-(k-1)*step,q,primes)
-        # print len(ans),-k*step,-(k-1)*step
+        print len(ans),-k*step,-(k-1)*step
         for i in range(len(ans)):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         k+=1
-
-        # solve = matrix.solve()
-        # if len(solve) > 0:
-        #     print "true solve"
-        #     for s in solve:
-        #         print s
-        #     exit()
-
-        if len(smooth_numbers) > 0:
-            # print "len",len(smooth_numbers)
-            # for i in smooth_numbers:
-            #     print i
-            # matrix.log()
-            # exit()
+        if len(smooth_numbers) > len(primes):
             solve = matrix.solve()
             print "solve found"
-            # for s in solve:
-            #     print s
             for s in solve:
-                print s
+                # print s
                 left = 1
                 right = []
                 for i in s:
@@ -72,9 +57,9 @@ def Factor(n, B):
                     right_piv[j] /= 2
                 for j in range(len(right_piv)):
                     true_right *= primes(j)**right_piv[j]
-                print "try gcd"
+                # print "try gcd"
 
-                print left, true_right
+                # print left, true_right
                 # left = abs(left)
                 # true_right = abs(true_right)
                 gcd = min(GCD(abs(left+true_right), n), GCD(abs(left-true_right), n))

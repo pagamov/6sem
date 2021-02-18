@@ -49,11 +49,11 @@ class Matrix_solver:
         for i in range(len(self.gaus[0])):
             lineal_rows.append([i])
 
-        for i in range(len(self.gaus)):
-            print self.gaus[i]
-
-        for i in range(len(lineal_rows)):
-            print lineal_rows[i]
+        # for i in range(len(self.gaus)):
+        #     print self.gaus[i]
+        #
+        # for i in range(len(lineal_rows)):
+        #     print lineal_rows[i]
 
         # exit()
 
@@ -80,11 +80,11 @@ class Matrix_solver:
                             self.gaus[i][j] = (self.gaus[i][j] + self.gaus[i][y]) % 2
                 # for i in range(len(self.gaus)):
                 #     print self.gaus[i]
-        for i in range(len(self.gaus)):
-            print self.gaus[i]
-
-        for i in range(len(lineal_rows)):
-            print lineal_rows[i]
+        # for i in range(len(self.gaus)):
+        #     print self.gaus[i]
+        #
+        # for i in range(len(lineal_rows)):
+        #     print lineal_rows[i]
 
 
         ans = []
