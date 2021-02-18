@@ -6,7 +6,7 @@ class Primes:
         self.p = []
         self.r = []
         q = Q(n)
-        for i in range(1,len(primes),2):
+        for i in range(1,len(primes)):
             print "\r", float(i)/float(len(primes))*100,"%",
             if jacobi(n%primes[i], primes[i]) == 1:
                 r = []

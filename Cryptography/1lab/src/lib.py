@@ -92,20 +92,6 @@ def eratosthenes(n):
 # real = 0
 # glob_min = 10000
 def smooth_under(number, primes):
-    # print "\n", number, "\n", log10(number)
-    # global rej, conf, real, glob_min
-    # print "\r",rej, conf, real,
-    # r = log10(abs(number))
-    # for prime in primes:
-    #     # if number % prime == 0:
-    #     r -= log10(prime)
-    # if abs(r) < glob_min:
-    #     glob_min = abs(r)
-    #     # print "\nmin",100*glob_min
-    # if abs(r) > 5:
-    #     rej += 1
-    #     return None
-    # conf += 1
     res = [0] * len(primes)
     i = 0
     flag = False
@@ -200,6 +186,7 @@ def smooth_region(L1, L2, q, primes):
                 exit()
             s[i].append(r + k*primes(i))
 
+    # NOTE: можно улучшить находя p^k < B и бегать по ним
     for p in range(len(primes)):
         for s_i in s[p]:
             for i in range(s_i, L2, primes(p)):
