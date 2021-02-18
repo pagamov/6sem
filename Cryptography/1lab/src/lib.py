@@ -182,17 +182,6 @@ def smooth_region(L1, L2, q, primes):
     for i in range(L1, L2):
         res.append([i, q(i), [0]*len(primes)])
     s = []
-    # t = time()
-    # for i in range(len(primes)):
-    #     s.append([])
-    #     # if jacobi()
-    #     for j in range(L1, L1 + primes[i]):
-    #         if q(j) % primes[i] == 0:
-    #             s[i].append(j)
-    #             if len(s[i]) == 2:
-    #                 break
-    # print "r",time() - t
-
     # NOTE: match r1 and r2 to L1 L2 region
     for i in range(len(primes)):
         s.append([])
@@ -221,6 +210,4 @@ def smooth_region(L1, L2, q, primes):
     for i in range(len(res)):
         if abs(res[i][1]) == 1:
             ans.append([res[i][0],q(res[i][0]),res[i][2]])
-    # for i in range(len(ans)):
-    #     print ans[i]
     return ans
