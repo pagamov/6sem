@@ -81,4 +81,5 @@ class Matrix_solver:
                     ans.append(lineal_rows[y])
 
         print "form ans", time() - t, "sec"
+        print "got", len(ans), "ans"
         return ans
