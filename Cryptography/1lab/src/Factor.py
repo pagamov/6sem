@@ -42,6 +42,6 @@ def Factor(n, B):
                     true_right *= primes(j)**right_piv[j]
                 gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
                 if gcd > 1 and n / gcd * gcd == n:
-                    print("\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
+                    print("\n\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
                     return [gcd, n/gcd]
     return [None, None]
