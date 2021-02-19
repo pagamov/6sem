@@ -8,22 +8,22 @@ def GCD(m,n):
         if m == 0 or n == 0 or m == n:
             return mult*max(n,m)
         if m == 1 or n == 1:
-            return mult*1
+            return mult
         if m % 2 == 0 and n % 2 == 0:
             mult *= 2
-            m = m/2
-            n = n/2
+            m = m//2
+            n = n//2
         if m % 2 == 0 and n % 2 != 0:
-            m = m/2
+            m = m//2
         if m % 2 != 0 and n % 2 == 0:
-            n = n/2
+            n = n//2
         if m % 2 != 0 and n % 2 != 0:
             if n > m:
-                piv = (n-m)/2
+                piv = (n-m)//2
                 n = m
                 m = piv
             elif n < m:
-                m = (m-n)/2
+                m = (m-n)//2
 
 def eratosthenes(n):
     numbers = list(range(2, n + 1))
