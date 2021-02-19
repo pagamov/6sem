@@ -15,9 +15,9 @@ class Matrix_solver:
             self.matrix[i].append(smooth_number[i])
 
     def log(self):
-        print "matrix:"
+        print("matrix:")
         for i in range(len(self.primes)):
-            print self.matrix[i]
+            print(self.matrix[i])
 
     def solve(self):
         # NOTE: make matrix for gaus and mod 2
@@ -35,7 +35,7 @@ class Matrix_solver:
             for j in range(len(self.gaus[i])):
                 self.gaus[i][j] = self.gaus[i][j] % 2
 
-        print "form matrix", len(self.gaus), "x", len(self.gaus[0]), time() - t, "sec"
+        print("form matrix", len(self.gaus), "x", len(self.gaus[0]), time() - t, "sec")
         # NOTE: solve
         if len(self.gaus[0]) == 0:
             return None
@@ -48,7 +48,7 @@ class Matrix_solver:
         banned_rows = set()
         banned_numbers = set()
         for y in range(len(self.gaus[0])):
-            print "\rmult matrix", float(y)/float(len(self.gaus[0]))*100,"%",
+            print("\rmult matrix", float(y)/float(len(self.gaus[0]))*100,"%",end="")
             x = -1
             for i in range(len(self.gaus)):
                 if self.gaus[i][y] == 1 and i not in banned_rows:
@@ -66,7 +66,7 @@ class Matrix_solver:
                                 lineal_rows[j].add(elem)
                         for i in range(len(self.gaus)):
                             self.gaus[i][j] = (self.gaus[i][j] + self.gaus[i][y]) % 2
-        print "\ndone operations", time() - t, "sec"
+        print("\ndone operations", time() - t, "sec")
 
         t = time()
         ans = []
@@ -80,6 +80,6 @@ class Matrix_solver:
                 if len(lineal_rows[y]) >= 2:
                     ans.append(lineal_rows[y])
 
-        print "form ans", time() - t, "sec"
-        print "got", len(ans), "ans"
+        print("form ans", time() - t, "sec")
+        print("got", len(ans), "ans")
         return ans

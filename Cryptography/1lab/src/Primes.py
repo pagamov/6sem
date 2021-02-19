@@ -1,4 +1,4 @@
-from lib import eratosthenes,jacobi,Q,tonelli
+from lib import eratosthenes,Q,tonelli,legendre
 from time import time
 
 class Primes:
@@ -9,13 +9,15 @@ class Primes:
         q = Q(n)
         t = time()
         for i in range(1,len(primes)):
-            print "\r", float(i)/float(len(primes))*100,"%",
-            if jacobi(n%primes[i], primes[i]) == 1:
+            print("\r", float(i)/float(len(primes))*100,"%",end="")
+            if legendre(n%primes[i], primes[i]) == 1:
+            # if jacobi(n%primes[i], primes[i]) == 1:
                 tr = tonelli(n,primes[i])
                 r = [
                 (tr - q.m) % primes[i],
                 (primes[i] - tr - q.m) % primes[i]
                 ]
+                # print(r)
 
                 # r = []
                 # j = 0
@@ -27,7 +29,7 @@ class Primes:
                 self.p.append(primes[i])
                 self.r.append(r)
 
-        print "\nprimes done in time:",time() - t, "sec"
+        print("\nprimes done in time:",time() - t, "sec")
 
     def __call__(self,i):
         return self.p[i]

@@ -15,9 +15,9 @@ class Gauss_Jordane:
                 self.matrix[i][j] = self.matrix[i][j] % 2
 
     def log(self):
-        print "Gauss_Jordane matrix:"
+        print("Gauss_Jordane matrix:")
         for i in range(len(self.matrix)):
-            print self.matrix[i]
+            print(self.matrix[i])
 
     def solve(self, ban):
         if len(self.matrix[0]) == 0:

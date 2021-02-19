@@ -3,24 +3,24 @@ def Factor(n, B):
     import decimal,copy
     from Primes import Primes
     from Matrix_solver import Matrix_solver
-    from lib import smooth_under,perm_find,GCD,Q,smooth_region,eratosthenes
-    start = long(decimal.Decimal(n).sqrt() + 1)
+    from lib import GCD,Q,smooth_region,eratosthenes
+    start = int(decimal.Decimal(n).sqrt() + 1)
     q = Q(n)
     primes = Primes(n,B,q)
-    print "primes len", len(primes)
+    print("primes len", len(primes))
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 10**4
+    step = 10**3
     k = 1
     smooth_numbers = []
     while q((k-1)*step) < n:
         ans = smooth_region((k-1)*step,k*step,q,primes)
-        print len(ans),(k-1)*step,k*step
+        print(len(ans),(k-1)*step,k*step)
         for i in range(len(ans)):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         ans = smooth_region(-k*step,-(k-1)*step,q,primes)
-        print len(ans),-k*step,-(k-1)*step
+        print(len(ans),-k*step,-(k-1)*step)
         for i in range(len(ans)):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
@@ -29,7 +29,7 @@ def Factor(n, B):
             solve = matrix.solve()
             # print "solve found"
             if len(solve) > 0:
-                print "Yaaaaaaaaaay :)))))"
+                print("Yaaaaaaaaaay :)))))")
             for s in solve:
                 left = 1
                 right = []
