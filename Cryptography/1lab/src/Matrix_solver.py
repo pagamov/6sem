@@ -35,7 +35,7 @@ class Matrix_solver:
             for j in range(len(self.gaus[i])):
                 self.gaus[i][j] = self.gaus[i][j] % 2
 
-        print "form gaus matrix", len(self.gaus), "x", len(self.gaus[0]), time() - t
+        print "form matrix", len(self.gaus), "x", len(self.gaus[0]), time() - t, "sec"
         # NOTE: solve
         if len(self.gaus[0]) == 0:
             return None
@@ -46,6 +46,7 @@ class Matrix_solver:
         for i in range(len(self.gaus[0])):
             lineal_rows.append({i})
         banned_rows = set()
+        banned_numbers = set()
         for y in range(len(self.gaus[0])):
             print "\rmult matrix", float(y)/float(len(self.gaus[0]))*100,"%",
             x = -1
@@ -53,10 +54,11 @@ class Matrix_solver:
                 if self.gaus[i][y] == 1 and i not in banned_rows:
                     x = i
                     banned_rows.add(i)
+                    banned_numbers.add(y)
                     break
             if x >= 0:
                 for j in range(len(self.gaus[0])):
-                    if j != y and self.gaus[x][j] == 1:
+                    if j != y and self.gaus[x][j] == 1 and j not in banned_numbers:
                         for elem in lineal_rows[y]:
                             if elem in lineal_rows[j]:
                                 lineal_rows[j].remove(elem)
@@ -64,7 +66,7 @@ class Matrix_solver:
                                 lineal_rows[j].add(elem)
                         for i in range(len(self.gaus)):
                             self.gaus[i][j] = (self.gaus[i][j] + self.gaus[i][y]) % 2
-        print "done operations", time() - t
+        print "\ndone operations", time() - t, "sec"
 
         t = time()
         ans = []
@@ -78,5 +80,5 @@ class Matrix_solver:
                 if len(lineal_rows[y]) >= 2:
                     ans.append(lineal_rows[y])
 
-        print "form ans", time() - t
+        print "form ans", time() - t, "sec"
         return ans

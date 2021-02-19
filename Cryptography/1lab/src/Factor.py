@@ -29,7 +29,7 @@ def Factor(n, B):
             solve = matrix.solve()
             # print "solve found"
             if len(solve) > 0:
-                print "\n\t***********\n\t\tYaaaaaaaaaay :)))))\n\t***********\n"
+                print "Yaaaaaaaaaay :)))))"
             for s in solve:
                 left = 1
                 right = []

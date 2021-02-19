@@ -11,10 +11,10 @@ class Primes:
         for i in range(1,len(primes)):
             print "\r", float(i)/float(len(primes))*100,"%",
             if jacobi(n%primes[i], primes[i]) == 1:
-                t = tonelli(n,primes[i])
+                tr = tonelli(n,primes[i])
                 r = [
-                (t - q.m) % primes[i],
-                (primes[i] - t - q.m) % primes[i]
+                (tr - q.m) % primes[i],
+                (primes[i] - tr - q.m) % primes[i]
                 ]
 
                 # r = []
@@ -27,8 +27,7 @@ class Primes:
                 self.p.append(primes[i])
                 self.r.append(r)
 
-        print "\n",time() - t
-        print "\nprimes done"
+        print "\nprimes done in time:",time() - t, "sec"
 
     def __call__(self,i):
         return self.p[i]
