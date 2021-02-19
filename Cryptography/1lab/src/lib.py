@@ -196,6 +196,7 @@ def tonelli(n, p):
 #     return r
 
 def smooth_region(L1, L2, q, primes):
+    t = time()
     res = []
     for i in range(L1, L2):
         res.append([i, q(i), [0]*len(primes)])
@@ -240,4 +241,5 @@ def smooth_region(L1, L2, q, primes):
     for i in range(len(res)):
         if abs(res[i][1]) == 1:
             ans.append([res[i][0],q(res[i][0]),res[i][2]])
+    print('\033[95m' + str(len(ans)) + '\033[0m' + " in [" + str(L1) + "..." + str(L2) + "] in time: " +'\033[96m'+ str(time() - t)+'\033[0m' + " sec")
     return ans

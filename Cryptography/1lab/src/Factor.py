@@ -7,25 +7,23 @@ def Factor(n, B):
     start = int(decimal.Decimal(n).sqrt() + 1)
     q = Q(n)
     primes = Primes(n,B,q)
-    print("primes len", len(primes))
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 10**3
+    step = 10**4
+    print("step " + '\033[95m' + str(step) + '\033[0m')
     k = 1
     smooth_numbers = []
     while q((k-1)*step) < n:
         ans = smooth_region((k-1)*step,k*step,q,primes)
-        print(len(ans),(k-1)*step,k*step)
         for i in range(len(ans)):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         ans = smooth_region(-k*step,-(k-1)*step,q,primes)
-        print(len(ans),-k*step,-(k-1)*step)
         for i in range(len(ans)):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         k+=1
-        if len(smooth_numbers) > len(primes):
+        if len(smooth_numbers) > 0:
             solve = matrix.solve()
             # print "solve found"
             if len(solve) > 0:
@@ -42,10 +40,14 @@ def Factor(n, B):
                     for j in range(len(primes)):
                         right_piv[j] += r[j]
                 for j in range(len(right_piv)):
-                    right_piv[j] /= 2
+                    right_piv[j] = int(right_piv[j] / 2)
                 for j in range(len(right_piv)):
+                    # print(right_piv[j])
                     true_right *= primes(j)**right_piv[j]
-                gcd = min(GCD(abs(left+true_right), n), GCD(abs(left-true_right), n))
+                # print(int(left+true_right))
+                # print("\n",left, true_right)
+                # exit()
+                gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
                 if gcd > 1 and n / gcd * gcd == n:
                     return [gcd, n/gcd]
     return [None, None]
