@@ -37,11 +37,11 @@ def Factor(n, B):
                     for j in range(len(primes)):
                         right_piv[j] += r[j]
                 for j in range(len(right_piv)):
-                    right_piv[j] = int(right_piv[j] / 2)
+                    right_piv[j] //= 2
                 for j in range(len(right_piv)):
                     true_right *= primes(j)**right_piv[j]
                 gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
-                if gcd > 1 and n / gcd * gcd == n:
+                if gcd > 1 and n // gcd * gcd == n:
                     print("\n\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
-                    return [gcd, n/gcd]
+                    return [gcd, n//gcd]
     return [None, None]

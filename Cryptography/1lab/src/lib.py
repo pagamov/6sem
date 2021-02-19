@@ -88,7 +88,7 @@ def smooth_region(L1, L2, q, primes):
             print("Error != 2")
             exit()
         for r in primes.r[i]:
-            k = int(L1 / primes(i))
+            k = L1 // primes(i)
             while r + k*primes(i) >= L1:
                 k -= 1
             k+=1
@@ -106,7 +106,7 @@ def smooth_region(L1, L2, q, primes):
             for i in range(s_i, L2, primes(p)):
                 # NOTE: find p^k < B and go for p^k
                 while res[i - L1][1] % primes(p) == 0:
-                    res[i - L1][1] /= primes(p)
+                    res[i - L1][1] //= primes(p)
                     res[i - L1][2][p] += 1
     ans = []
     for i in range(len(res)):
