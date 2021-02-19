@@ -44,14 +44,15 @@ class Matrix_solver:
         t = time()
         lineal_rows = []
         for i in range(len(self.gaus[0])):
-            lineal_rows.append([i])
-        banned_rows = []
+            lineal_rows.append({i})
+        banned_rows = set()
         for y in range(len(self.gaus[0])):
+            print "\rmult matrix", float(y)/float(len(self.gaus[0]))*100,"%",
             x = -1
             for i in range(len(self.gaus)):
                 if self.gaus[i][y] == 1 and i not in banned_rows:
                     x = i
-                    banned_rows.append(i)
+                    banned_rows.add(i)
                     break
             if x >= 0:
                 for j in range(len(self.gaus[0])):
@@ -60,7 +61,7 @@ class Matrix_solver:
                             if elem in lineal_rows[j]:
                                 lineal_rows[j].remove(elem)
                             else:
-                                lineal_rows[j].append(elem)
+                                lineal_rows[j].add(elem)
                         for i in range(len(self.gaus)):
                             self.gaus[i][j] = (self.gaus[i][j] + self.gaus[i][y]) % 2
         print "done operations", time() - t
