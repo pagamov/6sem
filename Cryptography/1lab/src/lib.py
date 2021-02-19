@@ -79,6 +79,7 @@ def smooth_region(L1, L2, q, primes):
     for i in range(L1, L2):
         res.append([i, q(i), [0]*len(primes)])
     s = []
+    primes_skipped = 0
     # NOTE: match r1 and r2 to L1 L2 region
     for i in range(len(primes)):
         s.append([])
@@ -91,6 +92,8 @@ def smooth_region(L1, L2, q, primes):
             while r + k*primes(i) >= L1:
                 k -= 1
             k+=1
+            if r + k*primes(i) >= L2:
+                primes_skipped += 1
             if r + k*primes(i) < L1:
                 print("r:",r,"k:",k)
                 print("p:",primes(i),r + k*primes(i))
@@ -109,5 +112,6 @@ def smooth_region(L1, L2, q, primes):
     for i in range(len(res)):
         if abs(res[i][1]) == 1:
             ans.append([res[i][0],q(res[i][0]),res[i][2]])
-    print('\033[95m' + str(len(ans)) + '\033[0m' + " in [" + str(L1) + "..." + str(L2) + "] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec")
+
+    print('\033[95m'+str(len(ans))+"\033[0m in ["+str(L1)+"..."+str(L2)+"] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec","primes skipped: \033[95m"+str(round(primes_skipped/(2*len(primes))*100,2))+"\033[0m %")
     return ans
