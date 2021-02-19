@@ -220,6 +220,7 @@ def smooth_region(L1, L2, q, primes):
                 exit()
             s[i].append(r + k*primes(i))
 
+    # sasha_loh = [0] * len(primes)
     for p in range(len(primes)):
         for s_i in s[p]:
             for i in range(s_i, L2, primes(p)):
@@ -227,6 +228,11 @@ def smooth_region(L1, L2, q, primes):
                 while res[i - L1][1] % primes(p) == 0:
                     res[i - L1][1] /= primes(p)
                     res[i - L1][2][p] += 1
+                # sasha_loh[p] += res[i - L1][2][p]
+            # print "prime:", primes(p), "res:",sasha_loh[p]
+
+    # for i in range(len(sasha_loh)):
+    #     print "prime sr:", primes(i), "res sr:", sasha_loh[i] / (L2-L1)
     ans = []
     for i in range(len(res)):
         if abs(res[i][1]) == 1:
