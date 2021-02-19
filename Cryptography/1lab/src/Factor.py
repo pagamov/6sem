@@ -25,9 +25,6 @@ def Factor(n, B):
         k+=1
         if len(smooth_numbers) > 0:
             solve = matrix.solve()
-            # print "solve found"
-            if len(solve) > 0:
-                print("Yaaaaaaaaaay :)))))")
             for s in solve:
                 left = 1
                 right = []
@@ -42,12 +39,9 @@ def Factor(n, B):
                 for j in range(len(right_piv)):
                     right_piv[j] = int(right_piv[j] / 2)
                 for j in range(len(right_piv)):
-                    # print(right_piv[j])
                     true_right *= primes(j)**right_piv[j]
-                # print(int(left+true_right))
-                # print("\n",left, true_right)
-                # exit()
                 gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
                 if gcd > 1 and n / gcd * gcd == n:
+                    print("\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
                     return [gcd, n/gcd]
     return [None, None]
