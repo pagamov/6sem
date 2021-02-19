@@ -134,14 +134,48 @@ class Q:
     def __call__(self,x):
         return (x + self.m)**2 - self.n
 
+def legendre(a, p):
+    return pow(a, (p - 1) // 2, p)
+
+def tonelli(n, p):
+    assert legendre(n, p) == 1, "not a square (mod p)"
+    q = p - 1
+    s = 0
+    while q % 2 == 0:
+        q //= 2
+        s += 1
+    if s == 1:
+        return pow(n, (p + 1) // 4, p)
+    for z in range(2, p):
+        if p - 1 == legendre(z, p):
+            break
+    c = pow(z, q, p)
+    r = pow(n, (q + 1) // 2, p)
+    t = pow(n, q, p)
+    m = s
+    t2 = 0
+    while (t - 1) % p != 0:
+        t2 = (t * t) % p
+        for i in range(1, m):
+            if (t2 - 1) % p == 0:
+                break
+            t2 = (t2 * t2) % p
+        b = pow(c, 1 << (m - i - 1), p)
+        r = (r * b) % p
+        c = (b * b) % p
+        t = (t * c) % p
+        m = i
+    return r
+
 def Tonelli_Shanks(a,p):
     a%=p
     p_1 = p
-    z
+    z=-1
     for i in range(p):
         if jacobi(i,p) == -1:
             z = i
-    Q,w
+    Q=0
+    w=0
     S = 0
     while p_1 % 2 == 0:
         p_1 %= 2
@@ -186,10 +220,10 @@ def smooth_region(L1, L2, q, primes):
                 exit()
             s[i].append(r + k*primes(i))
 
-    # NOTE: можно улучшить находя p^k < B и бегать по ним
     for p in range(len(primes)):
         for s_i in s[p]:
             for i in range(s_i, L2, primes(p)):
+                # NOTE: find p^k < B and go for p^k
                 while res[i - L1][1] % primes(p) == 0:
                     res[i - L1][1] /= primes(p)
                     res[i - L1][2][p] += 1

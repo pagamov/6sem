@@ -10,10 +10,10 @@ def Factor(n, B):
     print "primes len", len(primes)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 10**5
+    step = 10**4
     k = 1
     smooth_numbers = []
-    while True:
+    while q((k-1)*step) < n:
         ans = smooth_region((k-1)*step,k*step,q,primes)
         print len(ans),(k-1)*step,k*step
         for i in range(len(ans)):
@@ -27,7 +27,9 @@ def Factor(n, B):
         k+=1
         if len(smooth_numbers) > len(primes):
             solve = matrix.solve()
-            print "solve found"
+            # print "solve found"
+            if len(solve) > 0:
+                print "\n\t***********\n\t\tYaaaaaaaaaay :)))))\n\t***********\n"
             for s in solve:
                 left = 1
                 right = []

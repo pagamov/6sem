@@ -1,4 +1,5 @@
 import copy
+from time import time
 class Matrix_solver:
     def __init__(self, primes):
         # NOTE: matrix for storage i:primes j:x1,x2,x3,...,xn
@@ -21,6 +22,7 @@ class Matrix_solver:
     def solve(self):
         # NOTE: make matrix for gaus and mod 2
         self.gaus = []
+        t = time()
         # NOTE: cansel all p with 0 in them
         for i in range(len(self.primes)):
             flag = False
@@ -32,9 +34,14 @@ class Matrix_solver:
         for i in range(len(self.gaus)):
             for j in range(len(self.gaus[i])):
                 self.gaus[i][j] = self.gaus[i][j] % 2
+
+        print "form gaus matrix", len(self.gaus), "x", len(self.gaus[0]), time() - t
         # NOTE: solve
         if len(self.gaus[0]) == 0:
             return None
+
+
+        t = time()
         lineal_rows = []
         for i in range(len(self.gaus[0])):
             lineal_rows.append([i])
@@ -56,6 +63,9 @@ class Matrix_solver:
                                 lineal_rows[j].append(elem)
                         for i in range(len(self.gaus)):
                             self.gaus[i][j] = (self.gaus[i][j] + self.gaus[i][y]) % 2
+        print "done operations", time() - t
+
+        t = time()
         ans = []
         for y in range(len(self.gaus[0])):
             flag = True
@@ -66,4 +76,6 @@ class Matrix_solver:
             if flag:
                 if len(lineal_rows[y]) >= 2:
                     ans.append(lineal_rows[y])
+
+        print "form ans", time() - t
         return ans
