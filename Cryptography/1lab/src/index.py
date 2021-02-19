@@ -13,7 +13,7 @@ n = 4398050705407 * 68720001023
 # B = long(exp(sqrt(log(n)*log10(log10(n)))))
 # B = 10000
 # print n
-print "B", B
+print("B", B)
 
 # print tonelli(15347,23)
 
@@ -24,5 +24,5 @@ print "B", B
 # print GCD(abs(-177300-178669),n)
 t = time()
 res = Factor(n,B)
-print "\nans:", res[0], res[1]
-print "time:",time() - t, "sec"
+print("\nans:", res[0], res[1])
+print("time:",time() - t, "sec")
