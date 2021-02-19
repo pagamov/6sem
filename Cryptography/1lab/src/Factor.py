@@ -19,8 +19,6 @@ def Factor(n, B):
         for i in range(len(ans)):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
-
-        exit()
         ans = smooth_region(-k*step,-(k-1)*step,q,primes)
         print len(ans),-k*step,-(k-1)*step
         for i in range(len(ans)):
