@@ -24,7 +24,7 @@ def Factor(n, B):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         k+=1
-        if len(smooth_numbers) > found_smooth:
+        if len(smooth_numbers) > len(primes):
             found_smooth = len(smooth_numbers)
             solve = matrix.solve()
             for s in solve:
