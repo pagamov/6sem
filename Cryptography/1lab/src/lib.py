@@ -122,14 +122,13 @@ def smooth_region_old(L1, L2, q, primes):
 
 def smooth_region(L1, L2, q, primes):
     t = time()
-    res = []
+
     res0 = list(range(L1, L2))
     res1 = []
     for i in range(L1, L2):
         res1.append(q(i))
-        res.append([i, q(i), np.zeros(len(primes), dtype="int8")])
-
     res2 = np.zeros((len(res0), len(primes)), dtype="int8")
+
     print("Table creation in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec")
     t1 = time()
     s = []
@@ -150,8 +149,8 @@ def smooth_region(L1, L2, q, primes):
     for p in range(len(primes)):
         # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         for s_i in s[p]:
-            if s_i < L2:
-                res2[s_i::primes(p), p] += 1
+            if s_i <= L2:
+                res2[s_i - L1::primes(p), p] += 1
                 for i in range(s_i, L2, primes(p)):
                     res1[i - L1] //= primes(p)
                 for i in range(s_i, L2, primes(p)):
@@ -162,7 +161,7 @@ def smooth_region(L1, L2, q, primes):
     print("Prime devision completed in time: " +'\033[96m'+ str(round(time() - t3,4))+'\033[0m' + " sec")
     t2 = time()
     ans = []
-    for i in range(len(res)):
+    for i in range(len(res1)):
         if abs(res1[i]) == 1:
             ans.append([res0[i],q(res0[i]),res2[i]])
     print("Ans creation in time: " +'\033[96m'+ str(round(time() - t2,4))+'\033[0m' + " sec")

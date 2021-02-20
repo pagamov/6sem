@@ -9,7 +9,7 @@ def Factor(n, B):
     primes = Primes(n,B,q)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 1000000
+    step = 100000
     print("step: " + '\033[95m' + str(step) + '\033[0m')
     k = 1
     smooth_numbers = []
@@ -34,15 +34,16 @@ def Factor(n, B):
                 for i in s:
                     left *= start + smooth_numbers[i][0]
                     right.append(smooth_numbers[i][2])
-                true_right = 1
+                true_right = int(1)
                 right_piv = [0] * len(primes)
                 for r in right:
                     for j in range(len(primes)):
-                        right_piv[j] += r[j]
+                        right_piv[j] += int(r[j])
                 for j in range(len(right_piv)):
                     right_piv[j] //= 2
                 for j in range(len(right_piv)):
-                    true_right *= primes(j)**right_piv[j]
+                    true_right *= int(primes(j)**right_piv[j])
+
                 gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
                 if gcd > 1 and n // gcd * gcd == n:
                     print("\n\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
