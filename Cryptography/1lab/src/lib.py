@@ -77,16 +77,13 @@ def smooth_region(L1, L2, q, primes):
     t = time()
     res = []
     for i in range(L1, L2):
+        # print("\rform "+'\033[92m'+str(round(float(i)/(L2-1)*100,2))+'\033[0m'+" %",end="")
         res.append([i, q(i), [0]*len(primes)])
     s = []
     primes_skipped = 0
-    # NOTE: match r1 and r2 to L1 L2 region
     for i in range(len(primes)):
+        # print("\rshift "+'\033[92m'+str(round(float(i)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         s.append([])
-        # if len(primes.r[i]) != 2:
-        #     print(primes.p[i], primes.r[i])
-        #     print("Error != 2")
-        #     exit()
         for r in primes.r[i]:
             k = L1 // primes(i)
             while r + k*primes(i) >= L1:
@@ -94,28 +91,21 @@ def smooth_region(L1, L2, q, primes):
             k+=1
             if r + k*primes(i) >= L2:
                 primes_skipped += 1
-            # if r + k*primes(i) < L1:
-            #     print("r:",r,"k:",k)
-            #     print("p:",primes(i),r + k*primes(i))
-            #     print("L1:",L1, "L2:",L2)
-            #     print("Error s >= L2 s < L1")
-            #     exit()
             s[i].append(r + k*primes(i))
     for p in range(len(primes)):
+        # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         for s_i in s[p]:
             for i in range(s_i, L2, primes(p)):
-                # NOTE: find p^k < B and go for p^k
                 x = i - L1
                 res[x][1] //= primes(p)
                 res[x][2][p] += 1
                 while res[x][1] % primes(p) == 0:
                     res[x][1] //= primes(p)
                     res[x][2][p] += 1
-
     ans = []
     for i in range(len(res)):
         if abs(res[i][1]) == 1:
             ans.append([res[i][0],q(res[i][0]),res[i][2]])
 
-    print('\033[95m'+str(len(ans))+"\033[0m in ["+str(L1)+"..."+str(L2)+"] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec","primes skipped: \033[95m"+str(round(primes_skipped/(2*len(primes))*100,2))+"\033[0m %")
+    print('\r\033[95m'+str(len(ans))+"\033[0m in ["+str(L1)+"..."+str(L2)+"] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec","primes skipped: \033[95m"+str(round(primes_skipped/(2*len(primes))*100,2))+"\033[0m %")
     return ans

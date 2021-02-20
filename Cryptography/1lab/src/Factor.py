@@ -9,7 +9,7 @@ def Factor(n, B):
     primes = Primes(n,B,q)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 10**4
+    step = 4*10**4
     print("step " + '\033[95m' + str(step) + '\033[0m')
     k = 1
     smooth_numbers = []

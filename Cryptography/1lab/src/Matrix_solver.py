@@ -9,16 +9,10 @@ class Matrix_solver:
         self.gaus = []
         for i in range(len(primes)):
             self.matrix.append([])
-            # self.matrix.append(np.array([]).astype(int))
 
     def add(self, smooth_number):
         for i in range(len(self.primes)):
             self.matrix[i].append(smooth_number[i])
-            # self.matrix[i] = np.append(self.matrix[i],smooth_number[i])
-    def log(self):
-        print("matrix:")
-        for i in range(len(self.primes)):
-            print(self.matrix[i])
 
     def solve(self):
         self.gaus = []
@@ -30,7 +24,6 @@ class Matrix_solver:
                     flag = True
             if flag:
                 self.gaus.append(copy.copy(self.matrix[i]))
-                # self.gaus.append(np.array(self.matrix[i]))
         for i in range(len(self.gaus)):
             for j in range(len(self.gaus[i])):
                 self.gaus[i][j] = self.gaus[i][j] % 2
@@ -38,22 +31,11 @@ class Matrix_solver:
         print("form matrix \033[95m"+str(len(self.gaus))+"\033[0m x \033[95m"+str(len(self.gaus[0]))+'\033[0m', "in time: " + '\033[96m' + str(round(time() - t,4)) + '\033[0m' + " sec")
         if len(self.gaus[0]) == 0:
             return None
-
-
-        
-
-
-
-
         # NOTE: solve
         t = time()
-
-        # NOTE: Numpy
         self.gaus = np.array(self.gaus, dtype=bool)
-
         lineal_rows =  np.zeros((len(self.gaus[0]), len(self.gaus[0])), bool)
         np.fill_diagonal(lineal_rows, True)
-
         banned_rows = set()
         banned_numbers = set()
         for y in range(len(self.gaus[0])):
@@ -73,42 +55,7 @@ class Matrix_solver:
                         # for i in range(len(self.gaus)):
                         #     self.gaus[i][j] = self.gaus[i][j] ^ self.gaus[i][y]
         print("\ndone operations \033[96m"+str(round(time() - t,4))+"\033[0m sec")
-
-        # NOTE: Numpy Old
-        # t = time()
-        # self.gaus = np.array(self.gaus, dtype=bool)
-        # print("\ndone NPARRAY \033[96m"+str(round(time() - t,4))+"\033[0m sec")
-
-        # t = time()
-        # lineal_rows = []
-        # for i in range(len(self.gaus[0])):
-        #     lineal_rows.append({i})
-        # banned_rows = set()
-        # banned_numbers = set()
-        # for y in range(len(self.gaus[0])):
-        #     print("\rmult matrix " + '\033[92m' + str(round(float(y)/float(len(self.gaus[0]))*100,2))+"\033[0m %",end="")
-        #     x = -1
-        #     for i in range(len(self.gaus)):
-        #         if self.gaus[i][y] == 1 and i not in banned_rows:
-        #             x = i
-        #             banned_rows.add(i)
-        #             banned_numbers.add(y)
-        #             break
-        #     if x >= 0:
-        #         for j in range(len(self.gaus[0])):
-        #             if j != y and self.gaus[x][j] == 1 and j not in banned_numbers:
-        #                 for elem in lineal_rows[y]:
-        #                     if elem in lineal_rows[j]:
-        #                         lineal_rows[j].remove(elem)
-        #                     else:
-        #                         lineal_rows[j].add(elem)
-        #                 self.gaus[:,j] ^= self.gaus[:,y]
-        #                 # for i in range(len(self.gaus)):
-        #                 #     self.gaus[i][j] = self.gaus[i][j] ^ self.gaus[i][y]
-        # print("\ndone operations \033[96m"+str(round(time() - t,4))+"\033[0m sec")
-
         t = time()
-
         ans = []
         for y in range(len(self.gaus[0])):
             if y not in banned_numbers:
@@ -119,8 +66,6 @@ class Matrix_solver:
                         break
                 if flag:
                     b = []
-                    # if len(lineal_rows[y]) >= 2:
-                    #     ans.append(lineal_rows[y])
                     for i in range(len(lineal_rows)):
                         if lineal_rows[i][y]:
                             b.append(i)
@@ -129,4 +74,3 @@ class Matrix_solver:
         print("form ans \033[96m"+str(round(time() - t,4))+"\033[0m sec")
         print("got \033[95m"+str(len(ans))+"\033[0m ans")
         return ans
-
