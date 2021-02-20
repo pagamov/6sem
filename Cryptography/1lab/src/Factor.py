@@ -9,10 +9,11 @@ def Factor(n, B):
     primes = Primes(n,B,q)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 10**5
+    step = 2*10**5
     print("step " + '\033[95m' + str(step) + '\033[0m')
     k = 1
     smooth_numbers = []
+    found_smooth = 0
     while q((k-1)*step) < n:
         ans = smooth_region((k-1)*step,k*step,q,primes)
         for i in range(len(ans)):
@@ -23,7 +24,8 @@ def Factor(n, B):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         k+=1
-        if len(smooth_numbers) > len(primes):
+        if len(smooth_numbers) > found_smooth:
+            found_smooth = len(smooth_numbers)
             solve = matrix.solve()
             for s in solve:
                 left = 1
