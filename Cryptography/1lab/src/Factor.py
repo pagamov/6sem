@@ -9,8 +9,8 @@ def Factor(n, B):
     primes = Primes(n,B,q)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 10**5
-    print("step " + '\033[95m' + str(step) + '\033[0m')
+    step = 1000000
+    print("step: " + '\033[95m' + str(step) + '\033[0m')
     k = 1
     smooth_numbers = []
     while q((k-1)*step) < n:
@@ -23,7 +23,9 @@ def Factor(n, B):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         k+=1
+        print("Total number of smooth numberes: " + '\033[95m' + str(len(smooth_numbers)) + '\033[0m\n')
         if len(smooth_numbers) > len(primes):
+            print("All smooth numbers found\n")
             solve = matrix.solve()
             for s in solve:
                 left = 1

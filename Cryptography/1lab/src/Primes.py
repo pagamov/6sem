@@ -21,7 +21,7 @@ class Primes:
                 self.r.append(r)
 
         print("\nprimes done in time: "+ '\033[96m'+ str(round(time() - t,4))  + '\033[0m'+  " sec")
-        print("primes len " + '\033[95m' + str(len(primes))+'\033[0m')
+        print("primes len " + '\033[95m' + str(len(self.p))+'\033[0m')
 
     def __call__(self,i):
         return self.p[i]
