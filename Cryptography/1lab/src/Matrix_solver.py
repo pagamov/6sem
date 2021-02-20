@@ -39,11 +39,21 @@ class Matrix_solver:
         if len(self.gaus[0]) == 0:
             return None
 
+
+        
+
+
+
+
         # NOTE: solve
         t = time()
-        lineal_rows = []
-        for i in range(len(self.gaus[0])):
-            lineal_rows.append({i})
+
+        # NOTE: Numpy
+        self.gaus = np.array(self.gaus, dtype=bool)
+
+        lineal_rows =  np.zeros((len(self.gaus[0]), len(self.gaus[0])), bool)
+        np.fill_diagonal(lineal_rows, True)
+
         banned_rows = set()
         banned_numbers = set()
         for y in range(len(self.gaus[0])):
@@ -58,27 +68,65 @@ class Matrix_solver:
             if x >= 0:
                 for j in range(len(self.gaus[0])):
                     if j != y and self.gaus[x][j] == 1 and j not in banned_numbers:
-                        for elem in lineal_rows[y]:
-                            if elem in lineal_rows[j]:
-                                lineal_rows[j].remove(elem)
-                            else:
-                                lineal_rows[j].add(elem)
-                        for i in range(len(self.gaus)):
-                            self.gaus[i][j] = (self.gaus[i][j] + self.gaus[i][y]) % 2
+                        lineal_rows[:,j] ^= lineal_rows[:,y]
+                        self.gaus[:,j] ^= self.gaus[:,y]
+                        # for i in range(len(self.gaus)):
+                        #     self.gaus[i][j] = self.gaus[i][j] ^ self.gaus[i][y]
         print("\ndone operations \033[96m"+str(round(time() - t,4))+"\033[0m sec")
+
+        # NOTE: Numpy Old
+        # t = time()
+        # self.gaus = np.array(self.gaus, dtype=bool)
+        # print("\ndone NPARRAY \033[96m"+str(round(time() - t,4))+"\033[0m sec")
+
+        # t = time()
+        # lineal_rows = []
+        # for i in range(len(self.gaus[0])):
+        #     lineal_rows.append({i})
+        # banned_rows = set()
+        # banned_numbers = set()
+        # for y in range(len(self.gaus[0])):
+        #     print("\rmult matrix " + '\033[92m' + str(round(float(y)/float(len(self.gaus[0]))*100,2))+"\033[0m %",end="")
+        #     x = -1
+        #     for i in range(len(self.gaus)):
+        #         if self.gaus[i][y] == 1 and i not in banned_rows:
+        #             x = i
+        #             banned_rows.add(i)
+        #             banned_numbers.add(y)
+        #             break
+        #     if x >= 0:
+        #         for j in range(len(self.gaus[0])):
+        #             if j != y and self.gaus[x][j] == 1 and j not in banned_numbers:
+        #                 for elem in lineal_rows[y]:
+        #                     if elem in lineal_rows[j]:
+        #                         lineal_rows[j].remove(elem)
+        #                     else:
+        #                         lineal_rows[j].add(elem)
+        #                 self.gaus[:,j] ^= self.gaus[:,y]
+        #                 # for i in range(len(self.gaus)):
+        #                 #     self.gaus[i][j] = self.gaus[i][j] ^ self.gaus[i][y]
+        # print("\ndone operations \033[96m"+str(round(time() - t,4))+"\033[0m sec")
+
         t = time()
 
         ans = []
         for y in range(len(self.gaus[0])):
-            flag = True
-            for x in range(len(self.gaus)):
-                if self.gaus[x][y] == 1:
-                    flag = False
-                    break
-            if flag:
-                if len(lineal_rows[y]) >= 2:
-                    ans.append(lineal_rows[y])
+            if y not in banned_numbers:
+                flag = True
+                for x in range(len(self.gaus)):
+                    if self.gaus[x][y] == 1:
+                        flag = False
+                        break
+                if flag:
+                    b = []
+                    # if len(lineal_rows[y]) >= 2:
+                    #     ans.append(lineal_rows[y])
+                    for i in range(len(lineal_rows)):
+                        if lineal_rows[i][y]:
+                            b.append(i)
+                    ans.append(b)
 
         print("form ans \033[96m"+str(round(time() - t,4))+"\033[0m sec")
         print("got \033[95m"+str(len(ans))+"\033[0m ans")
         return ans
+
