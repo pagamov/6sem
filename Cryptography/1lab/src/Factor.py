@@ -46,7 +46,6 @@ def Factor(n, B):
 
                 gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
                 if gcd > 1 and n // gcd * gcd == n:
-                    print("\n\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
                     print("\033[91m"+"Solve Done"+"\033[0m")
                     return [gcd, n//gcd]
     return [None, None]
