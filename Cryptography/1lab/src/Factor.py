@@ -13,6 +13,7 @@ def Factor(n, B):
     print("step: " + '\033[95m' + str(step) + '\033[0m')
     k = 1
     smooth_numbers = []
+    found_smooth = 0
     while q((k-1)*step) < n:
         ans = smooth_region((k-1)*step,k*step,q,primes)
         for i in range(len(ans)):
