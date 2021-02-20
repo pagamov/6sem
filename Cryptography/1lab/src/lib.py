@@ -1,6 +1,7 @@
 import decimal,copy
 from math import log10
 from time import time
+import numpy as np
 
 def GCD(m,n):
     mult = 1
@@ -78,7 +79,9 @@ def smooth_region(L1, L2, q, primes):
     res = []
     for i in range(L1, L2):
         # print("\rform "+'\033[92m'+str(round(float(i)/(L2-1)*100,2))+'\033[0m'+" %",end="")
-        res.append([i, q(i), [0]*len(primes)])
+        # res.append([i, q(i), [0]*len(primes)])
+        res.append([i, q(i), np.zeros(len(primes), dtype="int8")])
+    print("Table creation in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec")
     s = []
     primes_skipped = 0
     for i in range(len(primes)):
@@ -103,9 +106,10 @@ def smooth_region(L1, L2, q, primes):
                     res[x][1] //= primes(p)
                     res[x][2][p] += 1
     ans = []
+    t2 = time()
     for i in range(len(res)):
         if abs(res[i][1]) == 1:
             ans.append([res[i][0],q(res[i][0]),res[i][2]])
-
+    print("Ans creation in time: " +'\033[96m'+ str(round(time() - t2,4))+'\033[0m' + " sec")
     print('\r\033[95m'+str(len(ans))+"\033[0m in ["+str(L1)+"..."+str(L2)+"] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec","primes skipped: \033[95m"+str(round(primes_skipped/(2*len(primes))*100,2))+"\033[0m %")
     return ans
