@@ -28,7 +28,7 @@ def Factor(n, B):
         if len(smooth_numbers) > len(primes):
             print("All smooth numbers found\n")
             solve = matrix.solve()
-            
+
             left = 1
             right = []
             for i in solve:
@@ -46,6 +46,6 @@ def Factor(n, B):
 
             gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
             if gcd > 1 and n // gcd * gcd == n:
-                print("\n\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
+                print("\033[91m"+"Solve Done"+"\033[0m")
                 return [gcd, n//gcd]
     return [None, None]
