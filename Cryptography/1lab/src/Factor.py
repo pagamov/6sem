@@ -28,24 +28,24 @@ def Factor(n, B):
         if len(smooth_numbers) > len(primes):
             print("All smooth numbers found\n")
             solve = matrix.solve()
-            for s in solve:
-                left = 1
-                right = []
-                for i in s:
-                    left *= start + smooth_numbers[i][0]
-                    right.append(smooth_numbers[i][2])
-                true_right = int(1)
-                right_piv = [0] * len(primes)
-                for r in right:
-                    for j in range(len(primes)):
-                        right_piv[j] += int(r[j])
-                for j in range(len(right_piv)):
-                    right_piv[j] //= 2
-                for j in range(len(right_piv)):
-                    true_right *= int(primes(j)**right_piv[j])
 
-                gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
-                if gcd > 1 and n // gcd * gcd == n:
-                    print("\n\033[91m"+"Yaaaaaaaaaay :)))))"+"\033[0m")
-                    return [gcd, n//gcd]
+            left = 1
+            right = []
+            for i in solve:
+                left *= start + smooth_numbers[i][0]
+                right.append(smooth_numbers[i][2])
+            true_right = int(1)
+            right_piv = [0] * len(primes)
+            for r in right:
+                for j in range(len(primes)):
+                    right_piv[j] += int(r[j])
+            for j in range(len(right_piv)):
+                right_piv[j] //= 2
+            for j in range(len(right_piv)):
+                true_right *= int(primes(j)**right_piv[j])
+
+            gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
+            if gcd > 1 and n // gcd * gcd == n:
+                print("\033[91m"+"Solve Done"+"\033[0m")
+                return [gcd, n//gcd]
     return [None, None]

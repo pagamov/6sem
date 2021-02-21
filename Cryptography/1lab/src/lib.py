@@ -163,7 +163,7 @@ def smooth_region(L1, L2, q, primes):
     ans = []
     for i in range(len(res1)):
         if abs(res1[i]) == 1:
-            ans.append([res0[i],q(res0[i]),res2[i]])
+            ans.append([res0[i],q(res0[i]),np.copy(res2[i])])
     print("Ans creation in time: " +'\033[96m'+ str(round(time() - t2,4))+'\033[0m' + " sec")
     print('\r\033[95m'+str(len(ans))+"\033[0m in ["+str(L1)+"..."+str(L2)+"] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec","primes skipped: \033[95m"+str(round(primes_skipped/(2*len(primes))*100,2))+"\033[0m %\n")
     return ans
