@@ -39,7 +39,10 @@ class Matrix_solver:
                 N += 1
                 # self.gaus.append(list(self.matrix[i]))
         
-        self.gaus = self.matrix % 2
+        self.gaus = np.copy(self.gaus[:N,:N])
+        self.gaus = self.gaus % 2
+
+        
 
         print(len(self.primes) - N, "rows and columnd were deleted")
         print("form matrix \033[95m"+str(N)+"\033[0m x \033[95m"+str(N)+'\033[0m', "in " + '\033[96m' + str(round(time() - t,4)) + '\033[0m' + " sec")
