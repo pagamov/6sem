@@ -4,12 +4,12 @@ def Factor(n, B):
     from Primes import Primes
     from Matrix_solver import Matrix_solver
     from lib import GCD,Q,smooth_region,eratosthenes
+    from data import step
     start = int(decimal.Decimal(n).sqrt() + 1)
     q = Q(n)
     primes = Primes(n,B,q)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    step = 100000
     print("step: " + '\033[95m' + str(step) + '\033[0m')
     k = 1
     smooth_numbers = []
