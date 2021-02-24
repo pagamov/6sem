@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import decimal,copy
 from math import log10
 from time import time
@@ -123,16 +124,18 @@ def smooth_region_old(L1, L2, q, primes):
 def smooth_region(L1, L2, q, primes):
     t = time()
 
+    # все значения между L1 и L2
     res0 = list(range(L1, L2))
-    res1 = []
-    for i in range(L1, L2):
-        res1.append(q(i))
+    # единица означает что число под этим индексом гладкое
+    res1 = [q(x) for x in range(L1, L2)]
+    # массив из разложений чисел по простым
     res2 = np.zeros((len(res0), len(primes)), dtype="int8")
 
     print("Table creation in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec")
     t1 = time()
     s = []
     primes_skipped = 0
+    # подгоняем r до [L1, L2] => получаем s
     for i in range(len(primes)):
         # print("\rshift "+'\033[92m'+str(round(float(i)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         s.append([])
