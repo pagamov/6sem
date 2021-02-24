@@ -12,17 +12,13 @@ from queue import Empty # for catching empty errors
 from color import color
 
 # configuration
-# from data import step as SIEVE_STEP
-SIEVE_STEP = 40000
+from data import step, B, n
 
 from time import time
 import decimal,copy
 from Primes import Primes
 from Matrix_solver import Matrix_solver
 from lib import GCD,Q,smooth_region,eratosthenes
-
-n = 104729 * 103591
-B = 10**5
 
 q = Q(n)
 primes = Primes(n,B,q)
@@ -36,9 +32,9 @@ def get_region(idx):
     # четные: положительный знак, нечетные: отрицательный
     sign = (idx % 2) * (-1)
     if sign == 0:
-        return [idx * SIEVE_STEP, (idx + 1) * SIEVE_STEP]
+        return [idx * step, (idx + 1) * step]
     else:
-        return [- (idx) * SIEVE_STEP, - (idx - 1) * SIEVE_STEP]
+        return [- (idx) * step, - (idx - 1) * step]
 
 
 # максимальное количество процессов
