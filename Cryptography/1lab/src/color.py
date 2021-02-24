@@ -1,13 +1,24 @@
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 def color(data,col):
     if col == "data":
         # pink
-        return "\033[95m"+str(data)+"\033[0m"
+        return bcolors.HEADER+str(data)+bcolors.ENDC
     elif col == "%":
         # green
-        return "\033[92m"+str(data)+"\033[0m %"
+        return bcolors.OKGREEN+str(data)+bcolors.ENDC+" %"
     elif col == "time":
         # light blue
-        return "\033[96m"+str(data)+"\033[0m sec"
+        return bcolors.OKCYAN+str(data)+bcolors.ENDC+" sec"
     elif col == "strong":
         # red
-        return "\033[91m"+str(data)+"\033[0m"
+        return bcolors.FAIL+str(data)+bcolors.ENDC
