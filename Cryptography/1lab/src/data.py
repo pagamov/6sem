@@ -15,6 +15,8 @@ n = 618970019642690137449562111 * 523347633027360537213687137 # ~10^53
 # RSA 110
 # n = 35794234179725868774991807832568455403003778024228226193532908190484670252364677411513516111204504060317568667
 
+# step to make in sieve process
+step = 100000
 
 
 # B = upper bound for Factor Base
@@ -25,8 +27,7 @@ B_search = True
 B_save = False
 # if B_search == False, name file where we find factor base? default = primes.crypt
 # file structure:
-# B
-# prime number \space r1 \space r2
+# data = [B, self.p, self.r]
 B_file = "primes.crypt"
 
 # do we need to find smooth numbers for given B? default = True
