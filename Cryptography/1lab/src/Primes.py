@@ -3,6 +3,7 @@ from time import time
 import numpy as np
 import pickle
 from data import B_search, B_file, B_save
+from color import color
 
 class Primes:
     def __init__(self, n, B, q):
@@ -46,7 +47,8 @@ class Primes:
                 exit()
             self.p = data[1]
             self.r = data[2]
-            print("\nprimes upload in time: "+color(round(time() - t,4),"time"),"from file: "+str(B_file))
+            print(color("primes upload in time:","strong")+color(round(time() - t,4),"time"),"from file: "+str(B_file))
+            print("primes len",color(len(self.p),"data"))
 
     def __call__(self,i):
         return self.p[i]
