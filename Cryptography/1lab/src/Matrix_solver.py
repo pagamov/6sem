@@ -38,14 +38,15 @@ class Matrix_solver:
                 self.gaus[N] = self.matrix[i]
                 N += 1
                 # self.gaus.append(list(self.matrix[i]))
-        
+
         self.gaus = np.copy(self.gaus[:N,:N])
         self.gaus = self.gaus % 2
 
-        
 
-        print(len(self.primes) - N, "rows and columnd were deleted")
-        print("form matrix \033[95m"+str(N)+"\033[0m x \033[95m"+str(N)+'\033[0m', "in " + '\033[96m' + str(round(time() - t,4)) + '\033[0m' + " sec")
+
+        print(len(self.primes) - N, "rows and colums were deleted")
+        print("form matrix",color(N,'data'),'x',color(N,'data'), end=" ")
+        print("in",color(round(time() - t,4),'time'))
         if len(self.gaus[0]) == 0:
             return None
 
@@ -61,27 +62,27 @@ class Matrix_solver:
         t_find_row_total = 0
         t_add_columns_total = 0
         for y in range(N):
-            print("\rGaus progress: " + '\033[92m' + str(round(float(y)/float(len(self.gaus[0]))*100,2))+"\033[0m %",end="")
+            print("\rGaus progress:",color(round(float(y)/float(len(self.gaus[0]))*100,2),'%'),end="")
             x = -1
-            
+
             for i in range(N):
                 if self.gaus[i, y] == 1 and i not in banned_rows:
                     x = i
                     banned_rows.add(i)
                     banned_numbers.add(y)
                     break
-            
+
             if x >= 0:
                 for j in range(N):
                     if j != y and self.gaus[x, j] == 1 and j not in banned_numbers:
                         lineal_rows[:,j] ^= lineal_rows[:,y]
-                        self.gaus[:,j] ^= self.gaus[:,y]                    
-                    
+                        self.gaus[:,j] ^= self.gaus[:,y]
+
             else:
                 zero_column = y
                 break
 
-        print("\ndone operations \033[96m"+str(round(time() - t,4))+"\033[0m sec")
+        print("\ndone operations",color(round(time() - t,4),'time'))
 
         t = time()
         b = []
@@ -90,6 +91,6 @@ class Matrix_solver:
                 b.append(i)
         return b
 
-        print("form ans \033[96m"+str(round(time() - t,4))+"\033[0m sec")
-        print("got \033[95m"+str(len(ans))+"\033[0m ans")
+        print("form ans",color(round(time() - t,4),'time'))
+        print("got",color(len(ans),'data')+" ans")
         return ans
