@@ -8,3 +8,4 @@ data_my
 *.res
 index2.py
 .vscode
+*.crypt
