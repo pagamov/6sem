@@ -10,7 +10,7 @@ def Factor(n, B):
     primes = Primes(n,B,q)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
-    print("step: " + '\033[95m' + str(step) + '\033[0m')
+    print("step:",color(step,"data"))
     k = 1
     smooth_numbers = []
     found_smooth = 0
@@ -24,9 +24,9 @@ def Factor(n, B):
             smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
             matrix.add(ans[i][2])
         k+=1
-        print("Total number of smooth numberes: " + '\033[95m' + str(len(smooth_numbers)) + '\033[0m\n')
+        print("Total number of smooth numberes:",color(len(smooth_numbers),'data'))
         if len(smooth_numbers) > len(primes):
-            print("All smooth numbers found\n")
+            print(color("All smooth numbers found",'strong')+'\n')
             solve = matrix.solve()
 
             left = 1
@@ -46,6 +46,6 @@ def Factor(n, B):
 
             gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
             if gcd > 1 and n // gcd * gcd == n:
-                print("\033[91m"+"Solve Done"+"\033[0m")
+                print(color("Solve Done",'strong'))
                 return [gcd, n//gcd]
     return [None, None]
