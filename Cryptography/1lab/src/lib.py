@@ -123,7 +123,6 @@ def smooth_region_old(L1, L2, q, primes):
 
 def smooth_region(L1, L2, q, primes):
     t = time()
-
     # все значения между L1 и L2
     res0 = list(range(L1, L2))
     # единица означает что число под этим индексом гладкое
@@ -131,8 +130,8 @@ def smooth_region(L1, L2, q, primes):
     # массив из разложений чисел по простым
     res2 = np.zeros((len(res0), len(primes)), dtype="int8")
 
-    print("Table creation in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec")
-    t1 = time()
+    print("Table creation in time:",color(round(time() - t,4),'time'))
+    t = time()
     s = []
     primes_skipped = 0
     # подгоняем r до [L1, L2] => получаем s
@@ -147,8 +146,8 @@ def smooth_region(L1, L2, q, primes):
             if r + k*primes(i) >= L2:
                 primes_skipped += 1
             s[i].append(r + k*primes(i))
-    print("S search completed in time: " +'\033[96m'+ str(round(time() - t1,4))+'\033[0m' + " sec")
-    t3 = time()
+    print("S search completed in time:",color(round(time() - t,4),'time'))
+    t = time()
     for p in range(len(primes)):
         # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         for s_i in s[p]:
@@ -161,12 +160,14 @@ def smooth_region(L1, L2, q, primes):
                     while res1[x] % primes(p) == 0:
                         res1[x] //= primes(p)
                         res2[x, p] += 1
-    print("Prime devision completed in time: " +'\033[96m'+ str(round(time() - t3,4))+'\033[0m' + " sec")
-    t2 = time()
+    print("Prime devision completed in time:",color(round(time() - t,4),'time'))
+    t = time()
     ans = []
     for i in range(len(res1)):
         if abs(res1[i]) == 1:
             ans.append([res0[i],q(res0[i]),np.copy(res2[i])])
-    print("Ans creation in time: " +'\033[96m'+ str(round(time() - t2,4))+'\033[0m' + " sec")
-    print('\r\033[95m'+str(len(ans))+"\033[0m in ["+str(L1)+"..."+str(L2)+"] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec","primes skipped: \033[95m"+str(round(primes_skipped/(2*len(primes))*100,2))+"\033[0m %\n")
+    print("Ans creation in time:",color(round(time() - t,4),'time'))
+    print(color(len(ans),'data'), "in ["+str(L1)+"..."+str(L2)+"]",end=" ")
+    print("in time",color(round(time() - t,4),'time'),end=" ")
+    print("primes skipped:",color(round(primes_skipped/(2*len(primes))*100,2),'%'))
     return ans
