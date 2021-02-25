@@ -2,11 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # multiprocessing
-from multiprocessing import Pool, Process
+from multiprocessing import Process
 from multiprocessing import Value   # memory shared variable
 from multiprocessing import Queue   # safe queues
-from multiprocessing import Lock
-from queue import Empty # for catching empty errors
 
 # coloring
 from color import color
@@ -40,21 +38,30 @@ def get_region(idx):
 # максимальное количество процессов
 MAX_PROCESSES = 4
 # номер региона на котором нужно остановится
-REGION_IDX_MAX = 200
+REGION_IDX_MAX = 20
 
-def worker_task(current_idx, lock, answer_queue, primes, q, idx):
-    """what every worker does"""
-    # проверить пустоту можно только ловлей ошибок
-    # если проверять с помощью if, тогда в промежутке между if и выполнением
-    # другого кода, другой процесс может взять элемент
+# TODO: pass lambda condition to exit
+def worker_task(current_idx, answer_queue, primes, q):
+    """
+    what every worker does
+
+    current_idx:  multiprocessing.Value of type "i" (integer).
+        Used to identify region
+    answer_queue: multiprocessing.Queue
+        Used to return answer from worker. You should read whole queue before
+        calling worker.join()
+    primes:       Primes class
+    q:            Q class
+    """
     while True:
-        lock.acquire()  # block lock
-        region_idx         = current_idx.value
-        current_idx.value += 1
-        lock.release()  # unblock lock
+        # process safe read and write operation
+        with current_idx.get_lock():
+            region_idx         = current_idx.value
+            current_idx.value += 1
 
+        # exit if we reached maximum
         if region_idx >= REGION_IDX_MAX:
-            break   # exit if we reached maximum
+            break
         region = get_region(region_idx)
         # calculate answer
         answer = smooth_region(*region, q, primes)
@@ -79,14 +86,12 @@ if __name__ == '__main__':
     answer_queue = Queue()
     # создаем работающие процессы
     workers = []
-    # модифицирование кол-ва гладких чисел только для одного процесса
-    region_idx_lock = Lock()
     # отслеживаем кол-во гладких чисел (queue.qsize() не гарантирует точности)
-    smooth_numbers_qty = Value('i', 0)
-    for _ in range(MAX_PROCESSES):
+    region_idx = Value('i', 0)
+    for worker_id in range(MAX_PROCESSES):
         workers.append(Process(
             target=worker_task,
-            args=(smooth_numbers_qty, region_idx_lock, answer_queue, primes, q, _)
+            args=(region_idx, answer_queue, primes, q)
         ))
     t = time()
     # запускаем их
@@ -103,7 +108,6 @@ if __name__ == '__main__':
     t1 = time()
     print("Get answer from workers in time: {}".format(str(round(t1 - t, 2))))
 
-    while not answer_queue.empty():
-        answer = answer_queue.get()
-        print(f"Get answer: {answer}")
-    print(f"smooth numbers qty: {smooth_numbers_qty.value}")
+    for answer in answers:
+        print("Get answer: {}".format(answer))
+    print(f"smooth numbers qty: {region_idx.value}")
