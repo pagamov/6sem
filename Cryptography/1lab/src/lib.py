@@ -174,3 +174,17 @@ def smooth_region(L1, L2, q, primes):
     print("in time",color(round(time() - t,4),'time'),end=" ")
     print("primes skipped:",color(round(primes_skipped/(2*len(primes))*100,2),'%'))
     return ans
+
+
+def get_region(idx, step):
+    """
+    return unique region for specified index
+    if index is even: return positive
+                 odd: return negative
+    """
+    # четные: положительный знак, нечетные: отрицательный
+    sign = (idx % 2) * (-1)
+    if sign == 0:
+        return [idx * step, (idx + 1) * step]
+    else:
+        return [- (idx) * step, - (idx - 1) * step]

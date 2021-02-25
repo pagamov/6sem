@@ -35,6 +35,8 @@ B_file = "primes.crypt"
 
 # do we need to find smooth numbers for given B? default = True
 Smooth_search = True
+# use parallel search instead of serial
+Smooth_search_parallel = True
 # do we need to save our smooth base? default = False
 Smooth_save = False
 # if Smooth_search == False, name file where we find smooth numbers? default = smooth.crypt
@@ -43,7 +45,7 @@ Smooth_save = False
 Smooth_file = "smooth.crypt"
 
 
-
+Parallel_max_processes = 4
 
 
 # do we need to form matrix? default = True
