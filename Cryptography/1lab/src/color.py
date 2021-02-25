@@ -10,6 +10,11 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def color(data,col):
+    """
+    data: object which will be colored
+    col:  string representing color. possible values are:
+        ['data', '%', 'time', 'strong']
+    """
     if col == "data":
         # pink
         return bcolors.HEADER+str(data)+bcolors.ENDC
