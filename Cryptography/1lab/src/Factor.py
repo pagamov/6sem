@@ -6,10 +6,6 @@ def Factor(n, B):
     from lib import GCD,Q,smooth_region,eratosthenes
     from data import step
     from color import color
-<<<<<<< HEAD
-    start = int(decimal.Decimal(n).sqrt() + 1)
-=======
->>>>>>> 0b7b416c6008cc77e445b4568e548b1435cce801
     q = Q(n)
     primes = Primes(n,B,q)
     smooth_numbers = []
