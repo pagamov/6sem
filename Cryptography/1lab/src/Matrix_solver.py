@@ -52,7 +52,7 @@ class Matrix_solver:
         print("form matrix",color(N,'data'),'x',color(N,'data'), end=" ")
         print("in",color(round(time() - t,4),'time'))
         if len(self.gaus[0]) == 0:
-            return None
+            return [None, None]
 
 
         # NOTE: solve
