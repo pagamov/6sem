@@ -55,6 +55,7 @@ def suive(q, primes):
         smooth_numbers = []
         while len(smooth_numbers) < MAX_SMOOTH_QTY:
             smooth_numbers.extend(answer_queue.get())
+            print("\nfound:",color(len(smooth_numbers),'data')+"/"+color(len(primes),'data'),color(round(float(len(smooth_numbers))/float(len(primes)*100),2),"%"))
         # говорим воркерам закончить
         stop_workers.value = True
         # ждем пока они закончат
