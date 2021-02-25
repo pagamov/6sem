@@ -55,7 +55,7 @@ def tonelli(n, p):
         s += 1
     if s == 1:
         return pow(n, (p + 1) // 4, p)
-    
+
     z = 2
     for z in range(2, p):
         if p - 1 == legendre(z, p):
@@ -93,13 +93,13 @@ def smooth_region_old(L1, L2, q, primes):
         # print("\rshift "+'\033[92m'+str(round(float(i)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         s.append([])
         for r in primes.r[i]:
-            k = L1 // primes(i)
-            while r + k*primes(i) >= L1:
+            k = L1 // primes[i]
+            while r + k*primes[i] >= L1:
                 k -= 1
             k+=1
-            if r + k*primes(i) >= L2:
+            if r + k*primes[i] >= L2:
                 primes_skipped += 1
-            s[i].append(r + k*primes(i))
+            s[i].append(r + k*primes[i])
     print("S search completed in time: " +'\033[96m'+ str(round(time() - t1,4))+'\033[0m' + " sec")
     t3 = time()
     for p in range(len(primes)):
@@ -107,12 +107,12 @@ def smooth_region_old(L1, L2, q, primes):
         for s_i in s[p]:
 
 
-            for i in range(s_i, L2, primes(p)):
+            for i in range(s_i, L2, primes[p]):
                 x = i - L1
-                res[x][1] //= primes(p)
+                res[x][1] //= primes[p]
                 res[x][2][p] += 1
-                while res[x][1] % primes(p) == 0:
-                    res[x][1] //= primes(p)
+                while res[x][1] % primes[p] == 0:
+                    res[x][1] //= primes[p]
                     res[x][2][p] += 1
     print("Prime devision completed in time: " +'\033[96m'+ str(round(time() - t3,4))+'\033[0m' + " sec")
     t2 = time()
@@ -142,26 +142,26 @@ def smooth_region(L1, L2, q, primes):
         # print("\rshift "+'\033[92m'+str(round(float(i)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         s.append([])
         for r in primes.r[i]:
-            k = L1 // primes(i)
-            while r + k*primes(i) >= L1:
+            k = L1 // primes[i]
+            while r + k*primes[i] >= L1:
                 k -= 1
             k+=1
-            if r + k*primes(i) >= L2:
+            if r + k*primes[i] >= L2:
                 primes_skipped += 1
-            s[i].append(r + k*primes(i))
+            s[i].append(r + k*primes[i])
     print("S search completed in time:",color(round(time() - t,4),'time'))
     t = time()
     for p in range(len(primes)):
         # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         for s_i in s[p]:
             if s_i < L2:
-                res2[s_i - L1::primes(p), p] += 1
-                for i in range(s_i, L2, primes(p)):
-                    res1[i - L1] //= primes(p)
-                for i in range(s_i, L2, primes(p)):
+                res2[s_i - L1::primes[p], p] += 1
+                for i in range(s_i, L2, primes[p]):
+                    res1[i - L1] //= primes[p]
+                for i in range(s_i, L2, primes[p]):
                     x = i - L1
-                    while res1[x] % primes(p) == 0:
-                        res1[x] //= primes(p)
+                    while res1[x] % primes[p] == 0:
+                        res1[x] //= primes[p]
                         res2[x, p] += 1
     print("Prime devision completed in time:",color(round(time() - t,4),'time'))
     t = time()

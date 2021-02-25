@@ -50,7 +50,7 @@ class Primes:
             print(color("primes upload in time:","strong")+color(round(time() - t,4),"time"),"from file: "+str(B_file))
             print("primes len",color(len(self.p),"data"))
 
-    def __call__(self,i):
+    def __getitem__(self,i):
         return self.p[i]
     def __len__(self):
         return len(self.p)
