@@ -6,14 +6,16 @@ def Factor(n, B):
     from lib import GCD,Q,smooth_region,eratosthenes
     from data import step
     from color import color
+<<<<<<< HEAD
     start = int(decimal.Decimal(n).sqrt() + 1)
+=======
+>>>>>>> 0b7b416c6008cc77e445b4568e548b1435cce801
     q = Q(n)
     primes = Primes(n,B,q)
     smooth_numbers = []
     matrix = Matrix_solver(primes.p)
     print("step:",color(step,"data"))
     k = 1
-    smooth_numbers = []
     found_smooth = 0
     while q((k-1)*step) < n:
         ans = smooth_region((k-1)*step,k*step,q,primes)
@@ -33,7 +35,7 @@ def Factor(n, B):
             left = 1
             right = []
             for i in solve:
-                left *= start + smooth_numbers[i][0]
+                left *= int(decimal.Decimal(n).sqrt() + 1) + smooth_numbers[i][0]
                 right.append(smooth_numbers[i][2])
             true_right = int(1)
             right_piv = [0] * len(primes)
