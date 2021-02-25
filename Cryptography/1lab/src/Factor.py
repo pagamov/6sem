@@ -17,11 +17,11 @@ def Factor(n, B):
     while q((k-1)*step) < n:
         ans = smooth_region((k-1)*step,k*step,q,primes)
         for i in range(len(ans)):
-            smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
+            smooth_numbers.append(ans[i])
             matrix.add(ans[i][2])
         ans = smooth_region(-k*step,-(k-1)*step,q,primes)
         for i in range(len(ans)):
-            smooth_numbers.append([ans[i][0],ans[i][1],ans[i][2]])
+            smooth_numbers.append(ans[i])
             matrix.add(ans[i][2])
         k+=1
         print("Total number of smooth numberes:",color(len(smooth_numbers),'data'))
