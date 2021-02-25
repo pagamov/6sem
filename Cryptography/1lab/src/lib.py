@@ -176,7 +176,7 @@ def smooth_region(L1, L2, q, primes):
             ans.append([res0[i],q(res0[i]),np.copy(res2[i])])
 
     data += "Ans: "+color(round(time() - t,4),'time')+"\n"
-    data += color(len(ans),'data')+"in ["+str(L1)+"..."+str(L2)+"]"
+    data += color(len(ans),'data')+" in ["+str(L1)+"..."+str(L2)+"]"
     data += " in time "+color(round(time() - t,4),'time')
     data += " skip: "+color(round(primes_skipped/(2*len(primes))*100,2),'%')+"\n"
     print(data)
