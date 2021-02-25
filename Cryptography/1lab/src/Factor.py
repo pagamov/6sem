@@ -5,6 +5,7 @@ def Factor(n, B):
     from Matrix_solver import Matrix_solver
     from lib import GCD,Q,smooth_region,eratosthenes
     from data import step
+    from color import color
     start = int(decimal.Decimal(n).sqrt() + 1)
     q = Q(n)
     primes = Primes(n,B,q)
