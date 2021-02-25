@@ -133,7 +133,8 @@ def smooth_region(L1, L2, q, primes):
     # массив из разложений чисел по простым
     res2 = np.zeros((len(res0), len(primes)), dtype="int8")
 
-    print("Table creation in time:",color(round(time() - t,4),'time'))
+    data = "Table: "+color(round(time() - t,4),'time')+"\n"
+
     t = time()
     s = []
     primes_skipped = 0
@@ -149,7 +150,9 @@ def smooth_region(L1, L2, q, primes):
             if r + k*primes[i] >= L2:
                 primes_skipped += 1
             s[i].append(r + k*primes[i])
-    print("S search completed in time:",color(round(time() - t,4),'time'))
+
+    data += "S: "+color(round(time() - t,4),'time')+"\n"
+
     t = time()
     for p in range(len(primes)):
         # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
@@ -163,16 +166,20 @@ def smooth_region(L1, L2, q, primes):
                     while res1[x] % primes[p] == 0:
                         res1[x] //= primes[p]
                         res2[x, p] += 1
-    print("Prime devision completed in time:",color(round(time() - t,4),'time'))
+
+    data += "Prime div: "+color(round(time() - t,4),'time')+"\n"
+
     t = time()
     ans = []
     for i in range(len(res1)):
         if abs(res1[i]) == 1:
             ans.append([res0[i],q(res0[i]),np.copy(res2[i])])
-    print("Ans creation in time:",color(round(time() - t,4),'time'))
-    print(color(len(ans),'data'), "in ["+str(L1)+"..."+str(L2)+"]",end=" ")
-    print("in time",color(round(time() - t,4),'time'),end=" ")
-    print("primes skipped:",color(round(primes_skipped/(2*len(primes))*100,2),'%'))
+
+    data += "Ans: "+color(round(time() - t,4),'time')+"\n"
+    data += color(len(ans),'data')+"in ["+str(L1)+"..."+str(L2)+"]"
+    data += " in time "+color(round(time() - t,4),'time')
+    data += " skip: "+color(round(primes_skipped/(2*len(primes))*100,2),'%')+"\n"
+    print(data)
     return ans
 
 
