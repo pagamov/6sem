@@ -1,6 +1,7 @@
 import copy
 from time import time
 import numpy as np
+from color import color
 
 class Matrix_solver:
     def __init__(self, primes):
@@ -66,11 +67,13 @@ class Matrix_solver:
             x = -1
 
             for i in range(N):
-                if self.gaus[i, y] == 1 and i not in banned_rows:
-                    x = i
-                    banned_rows.add(i)
-                    banned_numbers.add(y)
-                    break
+                if self.gaus[i, y] == 1:
+                    x = -2
+                    if x not in banned_rows:
+                        x = i
+                        banned_rows.add(i)
+                        banned_numbers.add(y)
+                        break
 
             if x >= 0:
                 for j in range(N):
@@ -78,7 +81,7 @@ class Matrix_solver:
                         lineal_rows[:,j] ^= lineal_rows[:,y]
                         self.gaus[:,j] ^= self.gaus[:,y]
 
-            else:
+            elif x == -1:
                 zero_column = y
                 break
 

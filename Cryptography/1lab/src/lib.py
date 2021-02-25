@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import decimal,copy
+from color import color
 from math import log10
 from time import time
 import numpy as np
@@ -54,6 +55,8 @@ def tonelli(n, p):
         s += 1
     if s == 1:
         return pow(n, (p + 1) // 4, p)
+    
+    z = 2
     for z in range(2, p):
         if p - 1 == legendre(z, p):
             break
@@ -151,7 +154,7 @@ def smooth_region(L1, L2, q, primes):
     for p in range(len(primes)):
         # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
         for s_i in s[p]:
-            if s_i <= L2:
+            if s_i < L2:
                 res2[s_i - L1::primes(p), p] += 1
                 for i in range(s_i, L2, primes(p)):
                     res1[i - L1] //= primes(p)
