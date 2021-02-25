@@ -31,7 +31,8 @@ def worker_task(region_idx, stop_working, answer_queue, primes, q):
 
 def suive(q, primes):
     if Smooth_search_parallel:
-        mp.set_start_method('fork')
+        mp.set_start_method('spawn')
+        # mp.set_start_method("spawn", force=True)
         MAX_SMOOTH_QTY = len(primes)
         print("MAX_SMOOTH_QTY:", MAX_SMOOTH_QTY)
         # инициализируем lock-safe очередь для ответов
