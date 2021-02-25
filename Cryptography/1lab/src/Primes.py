@@ -14,6 +14,13 @@ class Primes:
             self.r = []
             q = Q(n)
             t = time()
+
+            if legendre(n%primes[0], primes[0]) == 1:
+                tr = tonelli(n,primes[0])
+                r = [(tr - q.m) % primes[0]]
+                self.p.append(primes[0])
+                self.r.append(r)
+
             # Для каждого прайма проверяем Лежандра и находим корни Тонелли Шенксом
             for i in range(1,len(primes)):
                 print("\r"+color(round(float(i)/float(len(primes))*100,2),"%"),end="")
