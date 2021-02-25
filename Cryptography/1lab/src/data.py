@@ -16,11 +16,11 @@ n = 999998727899999 * 21732382677641 # ~10^29
 # n = 35794234179725868774991807832568455403003778024228226193532908190484670252364677411513516111204504060317568667
 
 # step to make in sieve process
-step = 10000
+step = 40000*2
 
 
 # B = upper bound for Factor Base
-B = 5000
+B = 500000
 # do we need to search for factor base? default = True
 B_search = True
 # do we need to save our factor base? default = False
