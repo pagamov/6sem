@@ -1,5 +1,5 @@
 def Factor(n, B):
-    import decimal
+    # color text!!!
     from color import color
 
     # some functions to support functionality (LOL)
@@ -21,28 +21,11 @@ def Factor(n, B):
     from Matrix_solver import Matrix_solver
     matrix = Matrix_solver(primes.p)
 
+    # form matrix with given smooth
     for smooth in smooth_numbers:
         matrix.add(smooth[2])
 
-    solve = matrix.solve()
+    # possibe outcome [None,None] or if we LUCKY give ans as [gcd,n//gcd]
+    solve = matrix.solve(smooth_numbers)
 
-    left = 1
-    right = []
-    for i in solve:
-        left *= int(decimal.Decimal(n).sqrt() + 1) + smooth_numbers[i][0]
-        right.append(smooth_numbers[i][2])
-    true_right = int(1)
-    right_piv = [0] * len(primes)
-    for r in right:
-        for j in range(len(primes)):
-            right_piv[j] += int(r[j])
-    for j in range(len(right_piv)):
-        right_piv[j] //= 2
-    for j in range(len(right_piv)):
-        true_right *= int(primes(j)**right_piv[j])
-
-    gcd = min(GCD(abs(int(left+true_right)), n), GCD(abs(int(left-true_right)), n))
-    if gcd > 1 and n // gcd * gcd == n:
-        print(color("Solve Done",'strong'))
-        return [gcd, n//gcd]
-    return [None, None]
+    return solve
