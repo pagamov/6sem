@@ -97,7 +97,7 @@ class Matrix_solver:
                 left = 1
                 right = []
                 for i in b:
-                    left *= int(decimal.Decimal(n).sqrt() + 1) + smooth_numbers[i][0]
+                    left *= int(decimal.Decimal(n).sqrt() + 1) + int(smooth_numbers[i][0])
                     right.append(smooth_numbers[i][2])
                 true_right = int(1)
                 right_piv = [0] * len(self.primes)
