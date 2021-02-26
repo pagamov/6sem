@@ -4,8 +4,8 @@
 
 # done
 # n = 104729 * 103591 # ~10^11
-n = 999998727899999 * 21732382677641 # ~10^29
-# n = 21732382677641 * 523347633027360537213687137 # ~10^40
+# n = 999998727899999 * 21732382677641 # ~10^29
+n = 21732382677641 * 523347633027360537213687137 # ~10^40
 # n = 3331113965338635107 * 523347633027360537213687137 # ~10^45
 # n = 618970019642690137449562111 * 523347633027360537213687137 # ~10^53
 
@@ -35,6 +35,8 @@ B_file = "primes.crypt"
 
 # do we need to find smooth numbers for given B? default = True
 Smooth_search = True
+# use parallel search instead of serial
+Smooth_search_parallel = True
 # do we need to save our smooth base? default = False
 Smooth_save = False
 # if Smooth_search == False, name file where we find smooth numbers? default = smooth.crypt
@@ -43,7 +45,7 @@ Smooth_save = False
 Smooth_file = "smooth.crypt"
 
 
-
+Parallel_max_processes = 4
 
 
 # do we need to form matrix? default = True
