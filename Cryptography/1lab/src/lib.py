@@ -79,52 +79,6 @@ def tonelli(n, p):
         m = i
     return r
 
-def smooth_region_old(L1, L2, q, primes):
-    t = time()
-    res = []
-    for i in range(L1, L2):
-        # print("\rform "+'\033[92m'+str(round(float(i)/(L2-1)*100,2))+'\033[0m'+" %",end="")
-        # res.append([i, q(i), [0]*len(primes)])
-        res.append([i, q(i), np.zeros(len(primes), dtype="int8")])
-    print("Table creation in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec")
-    t1 = time()
-    s = []
-    primes_skipped = 0
-    for i in range(len(primes)):
-        # print("\rshift "+'\033[92m'+str(round(float(i)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
-        s.append([])
-        for r in primes.r[i]:
-            k = L1 // primes[i]
-            while r + k*primes[i] >= L1:
-                k -= 1
-            k+=1
-            if r + k*primes[i] >= L2:
-                primes_skipped += 1
-            s[i].append(r + k*primes[i])
-    print("S search completed in time: " +'\033[96m'+ str(round(time() - t1,4))+'\033[0m' + " sec")
-    t3 = time()
-    for p in range(len(primes)):
-        # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
-        for s_i in s[p]:
-
-
-            for i in range(s_i, L2, primes[p]):
-                x = i - L1
-                res[x][1] //= primes[p]
-                res[x][2][p] += 1
-                while res[x][1] % primes[p] == 0:
-                    res[x][1] //= primes[p]
-                    res[x][2][p] += 1
-    print("Prime devision completed in time: " +'\033[96m'+ str(round(time() - t3,4))+'\033[0m' + " sec")
-    t2 = time()
-    ans = []
-    for i in range(len(res)):
-        if abs(res[i][1]) == 1:
-            ans.append([res[i][0],q(res[i][0]),res[i][2]])
-    print("Ans creation in time: " +'\033[96m'+ str(round(time() - t2,4))+'\033[0m' + " sec")
-    print('\r\033[95m'+str(len(ans))+"\033[0m in ["+str(L1)+"..."+str(L2)+"] in time: " +'\033[96m'+ str(round(time() - t,4))+'\033[0m' + " sec","primes skipped: \033[95m"+str(round(primes_skipped/(2*len(primes))*100,2))+"\033[0m %\n")
-    return ans
-
 def smooth_region(L1, L2, q, primes):
     t = time()
     # все значения между L1 и L2
