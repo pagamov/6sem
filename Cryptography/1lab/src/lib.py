@@ -82,52 +82,63 @@ def tonelli(n, p):
 def smooth_region(L1, L2, q, primes):
     t = time()
     # все значения между L1 и L2
-    res0 = list(range(L1, L2))
+    res0 = np.arange(L1, L2)
     # единица означает что число под этим индексом гладкое
-    res1 = [q(x) for x in range(L1, L2)]
+    res1 = np.array([q(x) for x in range(L1, L2)])
     # массив из разложений чисел по простым
     res2 = np.zeros((len(res0), len(primes)), dtype="int8")
     table_creation_time = time() - t
 
     t = time()
-    s = []
+    # просто для статистики (сколько простых вообще не попало для просеивания в
+    # эту область)
     primes_skipped = 0
     # подгоняем r до [L1, L2] => получаем s
-    for i in range(len(primes)):
+    # инициализируем массив сдвинутых r (делаем для того, чтобы не искать с
+    # нуля, а искать уже в [L1, L2])
+    s = [[] for _ in range(len(primes.r))]
+    for smooth_idx, prime in enumerate(primes):
         # print("\rshift "+'\033[92m'+str(round(float(i)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
-        s.append([])
-        for r in primes.r[i]:
-            k = L1 // primes[i]
-            while r + k*primes[i] >= L1:
+        for r in primes.r[smooth_idx]:
+            # получаем примерную оценку, сколько праймов надо пропустить
+            k = L1 // prime
+            # уточняем оценку
+            while r + k*prime >= L1:
                 k -= 1
             k+=1
-            if r + k*primes[i] >= L2:
+            # если полученное число выходит за рамки области, то в дальнейшем,
+            # мы его вообще проверять не будем (if просто для статистики)
+            if r + k*prime >= L2:
                 primes_skipped += 1
-            s[i].append(r + k*primes[i])
+            # при просеивании, начинаем сразу с этой позиции
+            s[smooth_idx].append(r + k*prime)
 
     s_search_time = time() - t
 
     t = time()
-    for p in range(len(primes)):
+    for prime_idx, prime in enumerate(primes):
         # print("\rsuive "+'\033[92m'+str(round(float(p)/float(len(primes))*100,2))+'\033[0m'+" %",end="")
-        for s_i in s[p]:
+        for s_i in s[prime_idx]:
             if s_i < L2:
-                res2[s_i - L1::primes[p], p] += 1
-                for i in range(s_i, L2, primes[p]):
-                    res1[i - L1] //= primes[p]
-                for i in range(s_i, L2, primes[p]):
-                    x = i - L1
-                    while res1[x] % primes[p] == 0:
-                        res1[x] //= primes[p]
-                        res2[x, p] += 1
+                # гарантируем что начиная с s_1 - L1, каждое число через prime
+                # делится на этот prime хотя бы 1 раз
+                res2[s_i - L1::prime, prime_idx] += 1
+                res1[s_i - L1::prime] //= prime
+                # дальнешее деление проверяется вручную
+                for smooth_idx in range(s_i, L2, prime):
+                    x = smooth_idx - L1
+                    while res1[x] % prime == 0:
+                        res1[x] //= prime
+                        res2[x, prime_idx] += 1
 
     prime_div_time = time() - t
 
     t = time()
     ans = []
-    for i in range(len(res1)):
-        if abs(res1[i]) == 1:
-            ans.append([res0[i],q(res0[i]),np.copy(res2[i])])
+    for smooth_idx, qx in enumerate(res1):
+        if abs(qx) == 1:
+            ans.append([res0[smooth_idx],q(res0[smooth_idx]),np.copy(res2[smooth_idx])])
+        # if abs(res1[smooth_idx]) == 1:
 
     answer_fill_time = time() - t
     smooth_region_output(table_creation_time, s_search_time, prime_div_time,
@@ -136,6 +147,8 @@ def smooth_region(L1, L2, q, primes):
     return ans
 
 
+# TODO:
+#   + implement slice handling
 def get_region(idx, step):
     """
     return unique region for specified index
