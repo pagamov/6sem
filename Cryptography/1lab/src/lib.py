@@ -4,6 +4,7 @@ from color import color
 from math import log10
 from time import time
 import numpy as np
+from debug_info import smooth_region_output
 
 def GCD(m,n):
     mult = 1
@@ -132,8 +133,7 @@ def smooth_region(L1, L2, q, primes):
     res1 = [q(x) for x in range(L1, L2)]
     # массив из разложений чисел по простым
     res2 = np.zeros((len(res0), len(primes)), dtype="int8")
-
-    data = "Table: "+color(round(time() - t,4),'time')+"\n"
+    table_creation_time = time() - t
 
     t = time()
     s = []
@@ -151,7 +151,7 @@ def smooth_region(L1, L2, q, primes):
                 primes_skipped += 1
             s[i].append(r + k*primes[i])
 
-    data += "S: "+color(round(time() - t,4),'time')+"\n"
+    s_search_time = time() - t
 
     t = time()
     for p in range(len(primes)):
@@ -167,7 +167,7 @@ def smooth_region(L1, L2, q, primes):
                         res1[x] //= primes[p]
                         res2[x, p] += 1
 
-    data += "Prime div: "+color(round(time() - t,4),'time')+"\n"
+    prime_div_time = time() - t
 
     t = time()
     ans = []
@@ -175,11 +175,10 @@ def smooth_region(L1, L2, q, primes):
         if abs(res1[i]) == 1:
             ans.append([res0[i],q(res0[i]),np.copy(res2[i])])
 
-    data += "Ans: "+color(round(time() - t,4),'time')+"\n"
-    data += color(len(ans),'data')+" in ["+str(L1)+"..."+str(L2)+"]"
-    data += " in time "+color(round(time() - t,4),'time')
-    data += " skip: "+color(round(primes_skipped/(2*len(primes))*100,2),'%')+"\n"
-    print(data)
+    answer_fill_time = time() - t
+    smooth_region_output(table_creation_time, s_search_time, prime_div_time,
+                         answer_fill_time, ans, L1, L2, primes_skipped, primes)
+
     return ans
 
 

@@ -5,6 +5,8 @@ from data import Smooth_search_parallel
 from color import color
 from lib import smooth_region
 
+from debug_info import suive_output
+
 # for multiprocessing
 import multiprocessing as mp
 from lib import get_region
@@ -55,7 +57,11 @@ def suive(q, primes):
         smooth_numbers = []
         while len(smooth_numbers) < MAX_SMOOTH_QTY:
             smooth_numbers.extend(answer_queue.get())
-            print("\nfound:",color(len(smooth_numbers),'data')+"/"+color(len(primes),'data'),color(round(float(len(smooth_numbers))/float(len(primes))*100,2),"%")+"\n")
+            suive_output(smooth_numbers, primes)
+        else:
+            # чтобы следующие линии не продолжались вместе с прогресс баром
+            # надо поставить новую линию
+            print()
         # говорим воркерам закончить
         stop_workers.value = True
         # ждем пока они закончат

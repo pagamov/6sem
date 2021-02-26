@@ -19,8 +19,8 @@ def color(data,col):
         # pink
         return bcolors.HEADER+str(data)+bcolors.ENDC
     elif col == "%":
-        # green
-        return bcolors.OKGREEN+str(data)+bcolors.ENDC+" %"
+        # green (leave two digits after dot)
+        return bcolors.OKGREEN+"{:.02f}".format(float(data))+bcolors.ENDC+" %"
     elif col == "time":
         # light blue
         return bcolors.OKCYAN+str(data)+bcolors.ENDC+" sec"
