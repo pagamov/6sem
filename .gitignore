@@ -9,3 +9,5 @@ data_my
 index2.py
 .vscode
 *.crypt
+*.o
+*.so
