@@ -7,13 +7,15 @@
 class cBiteMatrix {
 class column;
 public:
-    cBiteMatrix(int i): n(i), m(i) {
+    cBiteMatrix(int i, bool diag = false): n(i), m(i) {
         data.resize(n, column(m));
-        for(int i = 0; i < n; i++) {
-            data[i].put(1, i);
+        if(diag) {
+            for(int i = 0; i < n; i++) {
+                data[i].put(1, i);
+            }
         }
     }
-    cBiteMatrix(Ndarray<long,2>& from): n(from.getShape(1)), m(from.getShape(0)) {
+    cBiteMatrix(Ndarray<unsigned char,2>& from): n(from.getShape(1)), m(from.getShape(0)) {
         data.resize(n, column(m));
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < m; j++) {
@@ -26,7 +28,7 @@ public:
         data[k] ^= data[i];
     }
 
-    column operator[](int i) {
+    column& operator[](int i) {
 
         return data[i];
     } 
@@ -99,19 +101,58 @@ private:
     std::vector<column> data;
 };
 
-extern "C" int test(numpyArray<long> A, numpyArray<long> B) {
+extern "C" int test(numpyArray<unsigned char> A, numpyArray<unsigned char> B) {
+
+    Ndarray<unsigned char,2> matrix_from(A);
+    Ndarray<unsigned char,2> ret_matrix(B);
+
     
-    Ndarray<long,2> matrix_from(A);
-    Ndarray<long,2> ret_matrix(B);
+    // ----------------------------------------------
+    std::cout << "deliting zero rows\n";
+    int N_old = matrix_from.getShape(0);
 
-    int N = matrix_from.getShape(0);
+    cBiteMatrix nonCutMatrix(N_old);
 
-    std::cout << "making bit matrix\n";
+    int N = 0;  
 
-    cBiteMatrix matrix(matrix_from);
+    bool del;
+    for(int i = 0; i < N_old; i++) {
+        del = true;
+        for(int j = 0; j < N_old; j++) {
+            if(matrix_from[i][j] % 2 > 0){
+                del = false;
+                break;
+            }
+        }
+        if(!del) {
+            for(int j = 0; j < N_old; j++) {
+                nonCutMatrix[j].put(matrix_from[i][j], N);
+
+            }
+            N++;
+        }
+    }
+
+    cBiteMatrix matrix(N);
+
+    for(int k = 0; k < N; k++) {
+        for(int i = 0; i < matrix[k].data.size(); i++) {
+            matrix[k].data[i] = nonCutMatrix[k].data[i];
+            // std::cout << matrix[k][i] << "rows were deleted\n";
+        }
+    }
+    // ----------------------------------------------
+    
+
+    
+    std::cout << N_old - N << "rows were deleted\n";
+
+    // std::cout << "making bit matrix\n";
+
+    // cBiteMatrix matrix(matrix_from);
 
     std::cout << "making lineal columns support matrix\n";
-    cBiteMatrix lineal_cols(N);
+    cBiteMatrix lineal_cols(N, true);
 
     std::unordered_set<int> banned_columns;
 
@@ -144,7 +185,7 @@ extern "C" int test(numpyArray<long> A, numpyArray<long> B) {
             z++;
         }
     }
-    
+    std::cout << "\n\nPreparing ansver\n"; 
     return z;
     // return 1;
 }
