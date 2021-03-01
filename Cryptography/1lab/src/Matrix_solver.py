@@ -70,8 +70,6 @@ class Matrix_solver:
             print(len(right), right[0][0])
             for r in right:
                 right_piv += r
-                # for j in range(len(self.primes)):
-                #     right_piv[j] += int(r[j])
             
             print("\nseg3",color(round(time() - t1,4),'time'))
             t1 = time()
