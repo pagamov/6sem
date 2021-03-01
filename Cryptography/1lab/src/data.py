@@ -48,6 +48,9 @@ Smooth_file = "smooth.crypt"
 
 Parallel_max_processes = 4
 
+Verbose_level = 1
+"""level of output detail"""
+
 
 # do we need to form matrix? default = True
 Matrix_solve = True
