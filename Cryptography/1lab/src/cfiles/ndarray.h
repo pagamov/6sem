@@ -5,9 +5,11 @@
 //==========================================================
 
 
+
 #ifndef NDARRAY_H
 #define NDARRAY_H
 
+#include <iostream>
 
 
 // The C-struct to retrieve the ctypes structure.
@@ -22,6 +24,7 @@ struct numpyArray
     long *shape;
     long *strides;
 };
+
 
 
 
