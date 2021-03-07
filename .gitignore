@@ -11,3 +11,5 @@ index2.py
 *.crypt
 *.o
 *.so
+NFS
+msieve-1.53
