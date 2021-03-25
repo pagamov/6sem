@@ -1,0 +1,127 @@
+%%% пример отчета взян с сайта http://k806.ystok.ru/
+
+\documentclass[15pt]{extarticle}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% margin from paper borders
+\usepackage[margin={0.8in, 0.3in}]{geometry}
+% displaystyle в каждом мас моде
+\everymath{\displaystyle}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    keepspaces = true,
+    tabsize=2
+}
+
+\begin{document}
+
+\section*{Отчет по лабораторной работе №\,1
+по курсу \guillemotleft  Функциональное программирование\guillemotright}
+
+\begin{flushright}
+Студент группы 8О-307 МАИ \textit{Гамов Павел}, \textnumero 4 по списку \\
+\makebox[7cm]{Контакты: {\tt pagamov@gmail.com} \hfill} \\
+\makebox[7cm]{Работа выполнена: 25.03.2021 \hfill} \\
+\ \\
+Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
+\makebox[7cm]{Отчет сдан: \hfill} \\
+\makebox[7cm]{Итоговая оценка: \hfill} \\
+\makebox[7cm]{Подпись преподавателя: \hfill} \\
+
+\end{flushright}
+
+\section{Тема работы}
+Примитивные функции и особые операторы Коммон Лисп
+
+\section{Цель работы}
+Цель работы: научиться вводить S-выражения в Лисп-систему, определять переменные и функции, работать с условными операторами, работать с числами, используя схему линейной и древовидной рекурсии.
+
+\section{Задание (вариант №1.43/4)}
+Даны целые числа h (0 $\leq$ h $\le$ 12) и m (0 $\leq$ m $\le$ 60), указывающие момент времени: h часов, m минут.
+Запрограммируйте на языке Коммон Лисп функцию с двумя параметрами h и m, вычисляющую наименьшее время, которое должно пройти до того момента, когда часовая и минутная стрелки на циферблате совпадут. Время следует вычислять как целое число минут, округлённое в меньшую сторону.
+
+Примеры
+
+(parallel-hands-minutes 0 0) => 65
+
+(parallel-hands-minutes 0 15) => 50
+
+\section{Оборудование студента}
+macOS Catalina 10.15.7 Intel Core i5 2.3 GHz 8 ГБ RAM
+
+\section{Программное обеспечение}
+macOS, среда {\tt vim + sbcl}
+
+\section{Идея, метод, алгоритм}
+Так как это мой первый опыт с данным языком, зная общие концепции я сделал прототип на Python, далее упростил его, подогнав под синтаксис. Обнаружил краевые условия, например когда оба значения равны 0, фактически они уже встретились, так что в главной функции parallel-hands-minutes я расписал два сценария, где вызываю дополнительную функцию sub-f где присутствует аккумулятор z, в котором хранится переменная для ответа.
+
+\section{Сценарий выполнения работы}
+Сделал прототип на Python. Нашел краевые условия. Создал if условие, откуда вызываю sub-f функцию. В sub-f функции оператором cond вызываю далее хвостовую рекурсивную функцию.
+
+\section{Распечатка программы и её результаты}
+
+\subsection{Исходный код}
+
+\begin{lstlisting}
+#!/usr/local/bin/sbcl --script
+(defun sub-f (x y z)
+    (cond
+        ((> x 11) (sub-f 0 y z)) 
+        ((> y 59) (sub-f (+ x 1) 0 z)) 
+        ((and (= x (/ y 5)) (= 0 (rem y 5))) z)
+        (t (sub-f x (+ y 1) (+ z 1)))))
+
+(defun parallel-hands-minutes (x y)  
+    (if (= (rem (+ y 1) 60) 0)  
+        (sub-f (+ x 1) (+ y 1) 1)  
+        (sub-f x (+ y 1) 1)))
+
+(print (parallel-hands-minutes 0 0)) 
+(print (parallel-hands-minutes 0 15))
+\end{lstlisting}
+
+\subsection{Результаты работы}
+
+\begin{lstlisting}
+65 
+50
+\end{lstlisting}
+
+\section{Дневник отладки}
+
+%\begin{tabular}{|c|c|c|c|}
+%\hline
+%Дата		&	Событие		&	Действие по исправлению	&	Примечание \\
+%\hline
+%\end{tabular}
+
+\section{Замечания автора по существу работы}
+sbcl предоставляет возможность отладки программы, надо лучше освоить все команды. Пока нет полного понимания языка, можно прототипировать на бумаге или другом языке.
+
+\section{Выводы}
+Я познакомился с lisp, sbcl, простыми операторами, с тем как определять и вызывать функции. Создал код использующий хвостовые рекурсии, попутно разбирая другие возможные варианты решения задачи.
+
+\end{document}
