@@ -1,0 +1,156 @@
+%%% пример отчета взян с сайта http://k806.ystok.ru/
+
+\documentclass[15pt]{extarticle}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+%графики
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+
+% margin from paper borders
+\usepackage[margin={0.8in, 0.3in}]{geometry}
+% displaystyle в каждом мас моде
+\everymath{\displaystyle}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    keepspaces = true,
+    tabsize=2
+}
+
+\begin{document}
+
+\section*{Формулы по физике}
+
+\section{Распределение}
+
+\subsection{Среднее значение}
+
+$<x> = \dfrac{\int{x * \varphi (x) dx}} {\int{\varphi (x) dx}}$
+
+\subsection{Пример}
+
+$\varphi (x) = x^2$
+
+$0 \le x \le 1$
+
+$<x> = \dfrac{\int{x * \varphi (x) dx}} {\int{\varphi (x) dx}} = \dfrac{\int{x^3 dx}} {\int{x^2 dx}} =  \left.\dfrac{1/4 * x^4} {1/3 * x^3} \right\vert_0^1 = 3/4$
+
+\subsection{Распределение энергии теплового излучения по спектру, те по $\lambda$ или $\upsilon$}
+
+
+$U \dfrac{\text{Дж}}{\text{м}^3}$ - объемная плотность.
+
+$I \dfrac{\text{Дж}}{\text{м}^2 \text{сек}}$ - плотность потока.
+
+$dU = U_{\lambda}(\lambda) d \lambda = U_{\upsilon}(\upsilon) d \upsilon$  - функция распределения
+
+$dI = I_{\lambda}(\lambda) d \lambda = I_{\upsilon}(\upsilon) d \upsilon$  - функция распределения
+
+Как связаны $U$ и $I$? Если бы $U$ неслась со скоростью света, то $I = U * c$, но тепловое излучение изотропно, во все стороны, то надо делить на два, и еще на два (?), откуда $I = \dfrac{U * c}{4} $
+
+Какова связь распределений $U_{\lambda}(\lambda)$ и $U_{\upsilon}(\upsilon)$? 
+
+$c = \lambda * \upsilon$, откуда для скалярной функции $U_{\lambda}(\lambda) = U_{\upsilon}(\dfrac{c}{\lambda})$
+
+На самом деле $U_{\lambda}(\lambda) = U_{\upsilon}(\dfrac{c}{\lambda}) * \dfrac{d \upsilon}{d \lambda} = - U_{\upsilon}(\dfrac{c}{\lambda}) * \dfrac{c}{\lambda^2}$ так как
+
+$\dfrac{d \upsilon}{d \lambda} = - \dfrac{c}{\lambda^2}$
+
+Распределение Планка $U_{\lambda}(\lambda, t) = \dfrac{8 \pi h c}{\lambda^3 (e^{\dfrac{hc}{kt \lambda}} - 1)} \to_{\lambda \to 0} e^{-\dfrac{hc}{kt \lambda}} \to 0$
+
+
+\begin{tikzpicture}
+\begin{axis}[
+	title = Plank,
+	xlabel = {$x$},
+	ylabel = {$y$},
+	minor tick num = 2
+]
+
+\addplot [black] coordinates {
+	(0,0) (-10,-20) (-14.311,-5.79) (5.39,-4.87)
+};
+
+\addplot [blue] coordinates {
+	(0,0) (-40/3,-80/3) (-10.97,-4.95)
+};
+
+\addplot [green] coordinates {
+	(0,0) (-4/10,-8/10) (-8/10,-33/25) (-293/250,-209/125) (-1881/1250,-12313/7500)
+};
+
+\addplot [red] coordinates {
+	(-24/7 - 1/10,-20/7 + 1/10) (-24/7 + 1/10,-20/7 + 1/10) (-24/7 + 1/10,-20/7 - 1/10) (-24/7 - 1/10,-20/7 - 1/10) (-24/7 - 1/10,-20/7 + 1/10)
+};
+
+\end{axis}
+\end{tikzpicture}
+
+Крч центр купола в $\lambda^{*}(t)$
+
+$\left. \dfrac{ d U_{\lambda}(\lambda)}{d \lambda} \right\vert_{\lambda^{*}} = 0$
+
+$\lambda^{*} = \dfrac{b}{T}$ - Закон Вина
+
+$b = 0.3 \text{см} * \text{К}$
+
+Закон Стефана-Больцмана
+
+$U = \int_0^{\inf}{U_{\lambda}(\lambda, t) d \lambda} = \sigma * t^4 * 4 / c$ - площадь под графиком распределения Планка
+
+$I = \sigma t^4$
+
+При росте температуры в 2 раза площадь уменьшается в 16 раз!
+
+\subsection{Задачка}
+
+Тело формы остывает от $T_0$ за счет лучеиспускания. Как температура зависит от времени $T(t) = ?$
+
+$I = \sigma t^4 \dfrac{\text{Дж}}{\text{м}^2 \text{сек}}$
+Обрыв связи...
+
+
+\section{Фотоэффект}
+
+$E = h\upsilon = \dfrac{hc}{\lambda}$
+
+$I \dfrac{\text{Дж}}{\text{м}^2 \text{сек}} = Const$
+
+Уравнение Эйнштейна
+
+$h\upsilon - A_{\text{вых}} = \dfrac{mv^2}{2}$
+
+$h\upsilon > A_{\text{вых}} = 3.74 \text{ЭВ}$
+
+$i = Q / t = \dfrac{I} { h \upsilon} e$
+
+$e \psi_{\text{запирающий}} =  \dfrac{mv^2}{2} = h\upsilon - A_{\text{вых}}$
+
+
+\end{document}
