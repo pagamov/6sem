@@ -86,12 +86,17 @@ macOS, среда {\tt vim + sbcl}
 \subsection{Исходный код}
 
 \begin{lstlisting}
+(defun inc-h (h) 
+    (cond
+     ((= (+ h (/ 1 60)) 12) 0)
+     (t (+ h (/ 1 60)))))
+
 (defun sub-f (h m acc)
     (cond
         ((= h 12) (sub-f 0 m acc))
-        ((= m 60) (sub-f (+ h (/ 1 60)) 0 acc))
-        ((and (> h (/ m 5)) (< (+ h (/ 1 60)) (/ (+ m 1) 5))) (+ acc 1)) 
-        (t (sub-f (+ h (/ 1 60)) (+ m 1) (+ acc 1)))))
+        ((= m 60) (sub-f (inc-h h) 0 acc))
+        ((and (> h (/ m 5)) (< (inc-h h) (/ (+ m 1) 5))) acc)
+        (t (sub-f (inc-h h) (+ m 1) (+ acc 1)))))
 
 (defun parallel-hands-minutes (h m)  
     (if (= (rem (+ m 1) 60) 0)  
@@ -106,9 +111,9 @@ macOS, среда {\tt vim + sbcl}
 \subsection{Результаты работы}
 
 \begin{lstlisting}
-66 
-50 
-55
+65 
+49 
+54
 \end{lstlisting}
 
 \section{Дневник отладки}
@@ -119,6 +124,9 @@ macOS, среда {\tt vim + sbcl}
 \hline
 25.3		& Переписал для другого  & Добавил дробный & Программа дает неверный ответ \\
 		& сдвига стрелки		& сдвиг			&  объяснил ниже. \\
+\hline
+1.4		& Переписал для  & Изменил строку &  Противоречие в  \\
+		& минимальной минуты	& вывода			&  постановке задачи \\
 \hline
 \end{tabular}
 

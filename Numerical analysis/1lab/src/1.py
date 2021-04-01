@@ -25,6 +25,10 @@ class LU:
             for i in range(k,n):
                 for j in range(k-1,n):
                     self.U[i][j] = self.U[i][j] - self.L[i][k-1] * self.U[k-1][j];
+#        for j in range(n):
+#            for i in range(n):
+#                if i > j:
+#                    self.U[i][j] = 0
     def show(self):
         print "U matrix"
 

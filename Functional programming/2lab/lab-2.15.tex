@@ -1,0 +1,104 @@
+%%% пример отчета взян с сайта http://k806.ystok.ru/
+
+\documentclass[15pt]{extarticle}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% margin from paper borders
+\usepackage[margin={0.8in, 0.3in}]{geometry}
+% displaystyle в каждом мас моде
+\everymath{\displaystyle}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    keepspaces = true,
+    tabsize=2
+}
+
+
+
+\begin{document}
+
+\section*{Отчет по лабораторной работе №\,
+по курсу \guillemotleft  Функциональное программирование\guillemotright}
+
+\begin{flushright}
+Студент группы 8О-307 МАИ \textit{Гамов Павел}, \textnumero 4 по списку \\
+\makebox[7cm]{Контакты: {\tt pagamov@gmail.com} \hfill} \\
+\makebox[7cm]{Работа выполнена: 25.03.2021 \hfill} \\
+\ \\
+Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
+\makebox[7cm]{Отчет сдан: \hfill} \\
+\makebox[7cm]{Итоговая оценка: \hfill} \\
+\makebox[7cm]{Подпись преподавателя: \hfill} \\
+
+\end{flushright}
+
+\section{Тема работы}
+
+
+\section{Цель работы}
+
+
+\section{Задание (вариант №)}
+
+\section{Оборудование студента}
+macOS Catalina 10.15.7 Intel Core i5 2.3 GHz 8 ГБ RAM
+
+\section{Программное обеспечение}
+macOS, среда {\tt vim + sbcl}
+
+\section{Идея, метод, алгоритм}
+
+\section{Сценарий выполнения работы}
+
+\section{Распечатка программы и её результаты}
+
+\subsection{Исходный код}
+
+\begin{lstlisting}
+some code
+\end{lstlisting}
+
+\subsection{Результаты работы}
+
+\begin{lstlisting}
+some code
+\end{lstlisting}
+
+\section{Дневник отладки}
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+Дата     & Событие              & Действие по исправлению   & Примечание \\
+5.03.21 & Была использованна   & Написал линейную рекурсию &            \\
+         & древовидная рекурсия &                           &            \\
+\hline
+\end{tabular}
+
+\section{Замечания автора по существу работы}
+
+\section{Выводы}
+
+\end{document}
