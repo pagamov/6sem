@@ -11,14 +11,10 @@ def display(m,t):
     """
     display matrix row by row and print text t before it
     """
-    print t
+    print(t)
     for row in m:
-        print row
-    print ''
-
-display(A, "A matrix")
-display([b], "b vector")
-
+        print(row)
+    print('')
 def m_zero(n):
     res = []
     for i in range(n):
@@ -27,6 +23,26 @@ def m_zero(n):
             r.append(0)
         res.append(r)
     return res
+def Gaus(A):
+    U = copy.deepcopy(A)
+    L = m_zero(len(A))
+    n = len(A)
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                L[i][j] = 1
+
+    for i in range(n-1):
+        for j in range(i+1, n):
+            do_d = (-U[j][i]) / U[i][i]
+            for k in range(i, n):
+                U[j][k] = U[i][k] * do_d + U[j][k]
+
+
+        display(U, 'm')
+
+display(A, "A matrix")
+display([b], "b vector")
 
 def LU(A):
     U = copy.deepcopy(A)
@@ -35,7 +51,7 @@ def LU(A):
 
     for i in range(n):
         for j in range(i,n):
-            L[j][i]=U[j][i] / U[i][i]
+            L[j][i] = U[j][i] / U[i][i]
 
     for k in range(1,n):
         for i in range(k-1,n):
@@ -60,8 +76,7 @@ def prois(U, L):
                 R[i][j] += L[i][k] * U[k][j]
     return R
 
-R = prois(U, L)
-display(R, "R mult of L and U")
+display(prois(U, L), "R mult of L and U")
 
 def determinant_recursive(A, total=0):
     """
@@ -90,9 +105,94 @@ def determinant_recursive(A, total=0):
         total += sign * A[0][fc] * sub_det
     return total
 
-print 'det of A', determinant_recursive(A)
+print('det of A', determinant_recursive(A))
+print('det L * det U', determinant_recursive(L) * determinant_recursive(U))
 
-print 'det L * det U', determinant_recursive(L) * determinant_recursive(U)
+def transposeMatrix(m):
+    return list(map(list,zip(*m)))
 
-def invert(A):
-    pass
+def getMatrixMinor(m,i,j):
+    return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
+
+def getMatrixDeternminant(m):
+    #base case for 2x2 matrix
+    if len(m) == 2:
+        return m[0][0]*m[1][1]-m[0][1]*m[1][0]
+
+    determinant = 0
+    for c in range(len(m)):
+        determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
+    return determinant
+
+def getMatrixInverse(m):
+    determinant = getMatrixDeternminant(m)
+    #special case for 2x2 matrix:
+    if len(m) == 2:
+        return [[m[1][1]/determinant, -1*m[0][1]/determinant],
+                [-1*m[1][0]/determinant, m[0][0]/determinant]]
+
+    #find matrix of cofactors
+    cofactors = []
+    for r in range(len(m)):
+        cofactorRow = []
+        for c in range(len(m)):
+            minor = getMatrixMinor(m,r,c)
+            cofactorRow.append(((-1)**(r+c)) * getMatrixDeternminant(minor))
+        cofactors.append(cofactorRow)
+    cofactors = transposeMatrix(cofactors)
+    for r in range(len(cofactors)):
+        for c in range(len(cofactors)):
+            cofactors[r][c] = cofactors[r][c]/determinant
+    return cofactors
+
+inv = getMatrixInverse(A)
+
+display(inv, 'invert matrix A')
+
+# inv_U = getMatrixInverse(U)
+# inv_L = getMatrixInverse(L)
+#
+# inv_LU = prois(inv_U, inv_L)
+#
+# display(inv_LU, 'invert matrix LU')
+
+def solve_L(L, b):
+    n = len(L)
+    y = [0] * n
+    for i in range(n):
+        s = 0
+        for p in range(i):
+            s += L[i][p] * y[p]
+        y[i] = b[i] - s
+    return y
+
+y = solve_L(L, b)
+display([y], 'solve for L')
+
+def solve_U(U, y):
+    n = len(U)
+    x = [0] * n
+    for i in range(n):
+        s = 0
+        for p in range(i-1):
+            s += U[n-1-i][n-p-1] * x[n-p-1]
+        x[n-i-1] = (y[n-i-1] - s) / U[n-i-1][n-i-1]
+
+    for i in range(n):
+        s = 0
+        for p in range(n-i,n):
+            s += U[n-i-1][p] * x[p]
+        x[n-i-1] = (y[n-i-1] - s) / U[n-i-1][n-i-1]
+    return x
+
+x = solve_U(U, y)
+display([x], 'solve for U')
+
+def prove(A, x):
+    n = len(A)
+    res = [0] * n
+    for i in range(n):
+        for j in range(n):
+            res[i] += A[i][j] * x[j]
+    return res
+display([prove(A,x)], 'prove for A')
