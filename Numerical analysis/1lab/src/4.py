@@ -95,8 +95,10 @@ def get_self_number(A):
         res.append(A[i][i])
     return sorted(res)
 
+
 display(A, "A matrix")
 matrix, it = jacobi(A, err)
 display(matrix,'after jacobi')
 display([it],'iteration')
+
 display([get_self_number(matrix)],'res')
