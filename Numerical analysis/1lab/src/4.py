@@ -4,11 +4,18 @@ import math
 A = [[8,2,-1], [2,-5,-8], [-1,-8,-5]]
 err = 10**-4
 
-def display(A, word):
-    print('\n' + word)
-    for line in A:
-        print(line)
-display(A, "A matrix")
+# λ_1≈-13.024
+# λ_2≈2.225
+# λ_3≈8.799
+
+def display(m,t):
+    """
+    display matrix row by row and print text t before it
+    """
+    print(t)
+    for row in m:
+        print(row)
+    print('')
 def find_max(A):
     m = -10**100
     ib,jb = None, None
@@ -29,6 +36,12 @@ def error(A, A_, err):
         return False
     else:
         return True
+def transpose(A):
+    res = copy.deepcopy(A)
+    for i in range(len(A)):
+        for j in range(len(A)):
+            res[i][j] = A[j][i]
+    return res
 def rotate_matrix(A,s,c,i,j):
     res = copy.deepcopy(A)
     for k in range(len(A)):
@@ -69,47 +82,21 @@ def jacobi(A, err):
             P = 2 * A[i][j] / (A[i][i] - A[j][j])
         c = math.cos(math.atan(P)/2)
         s = math.sin(math.atan(P)/2)
-
-        # rotate = rotate_matrix(A,s,c,i,j)
-        # # display(rotate,'rotate')
-        # A_ = prois(rotate, A)
-        A_ = prois(rotate_matrix(A,s,c,i,j), A)
-        if abs(A_[i][j]) > abs(A[i][j]):
-            print(A_[i][j], A[i][j])
-            exit()
-        # for k in range(len(A)):
-        #     for l in range(len(A)):
-        #         if k not in [i,j] and l not in [i,j]:
-        #             A_[k][l] = A[k][l]
-        #         elif k == i and l not in [i,j]:
-        #             A_[i][l] = A[i][l] * c + A[j][l] * s
-        #         elif k == j and l not in [i,j]:
-        #             A_[j][l] = -1 * A[i][l] * s + A[j][l] * c
-        #         elif k not in [i,j] and l == i:
-        #             A_[k][i] = A[k][i] * c + A[k][j] * s
-        #         elif k not in [i,j] and l == j:
-        #             A_[k][j] = -1 * A[k][i] * s + A[k][j] * c
-        #         elif k == i and l == i:
-        #             A_[i][i] = (A[i][i]*c+A[j][i]*s)*c+(A[i][j]*c+A[j][j]*s)*s
-        #         elif k == j and l == i:
-        #             A_[j][i] = (-1*A[i][i]*s+A[j][i]*c)*c+(-1*A[i][j]*s+A[j][j]*c)*s
-        #         elif k == j and l == j:
-        #             A_[j][i] = -1*(-1*A[i][i]*s+A[j][i]*c)*s+(-1*A[i][j]*s+A[j][j]*c)*c
-        #         elif k == i and l == j:
-        #             A_[j][i] = -1*(A[i][i]*c+A[j][i]*s)*s+(A[i][j]*c+A[j][j]*s)*c
-        #         else:
-        #             print('LOL')
-        #             exit()
-        # if error(A, A_, err):
-        #     # print('exit')
-        #     break
-        A = copy.deepcopy(A_)
+        rotate = rotate_matrix(A,s,c,i,j)
+        A_ = prois(transpose(rotate),prois(A,rotate))
         num_of_it += 1
-        if num_of_it == 100:
+        if error(A, A_, err):
             break
-
-        # display(A,'iteration ' + str(num_of_it))
+        A = copy.deepcopy(A_)
     return A, num_of_it
+def get_self_number(A):
+    res = []
+    for i in range(len(A)):
+        res.append(A[i][i])
+    return sorted(res)
+
+display(A, "A matrix")
 matrix, it = jacobi(A, err)
 display(matrix,'after jacobi')
 display([it],'iteration')
+display([get_self_number(matrix)],'res')

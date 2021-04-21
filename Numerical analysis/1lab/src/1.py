@@ -40,10 +40,6 @@ def Gaus(A):
 
 
         display(U, 'm')
-
-display(A, "A matrix")
-display([b], "b vector")
-
 def LU(A):
     U = copy.deepcopy(A)
     L = m_zero(len(A))
@@ -62,11 +58,6 @@ def LU(A):
                 U[i][j] = U[i][j] - L[i][k-1] * U[k-1][j]
 
     return L,U
-
-L,U = LU(A)
-display(U, "U matrix")
-display(L, "L matrix")
-
 def prois(U, L):
     n = len(U)
     R = m_zero(n)
@@ -75,9 +66,6 @@ def prois(U, L):
             for k in range(n):
                 R[i][j] += L[i][k] * U[k][j]
     return R
-
-display(prois(U, L), "R mult of L and U")
-
 def determinant_recursive(A, total=0):
     """
     find determinant of matrix
@@ -104,16 +92,10 @@ def determinant_recursive(A, total=0):
         # H) total all returns from recursion
         total += sign * A[0][fc] * sub_det
     return total
-
-print('det of A', determinant_recursive(A))
-print('det L * det U', determinant_recursive(L) * determinant_recursive(U))
-
 def transposeMatrix(m):
     return list(map(list,zip(*m)))
-
 def getMatrixMinor(m,i,j):
     return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
-
 def getMatrixDeternminant(m):
     #base case for 2x2 matrix
     if len(m) == 2:
@@ -123,7 +105,6 @@ def getMatrixDeternminant(m):
     for c in range(len(m)):
         determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
     return determinant
-
 def getMatrixInverse(m):
     determinant = getMatrixDeternminant(m)
     #special case for 2x2 matrix:
@@ -144,18 +125,6 @@ def getMatrixInverse(m):
         for c in range(len(cofactors)):
             cofactors[r][c] = cofactors[r][c]/determinant
     return cofactors
-
-inv = getMatrixInverse(A)
-
-display(inv, 'invert matrix A')
-
-# inv_U = getMatrixInverse(U)
-# inv_L = getMatrixInverse(L)
-#
-# inv_LU = prois(inv_U, inv_L)
-#
-# display(inv_LU, 'invert matrix LU')
-
 def solve_L(L, b):
     n = len(L)
     y = [0] * n
@@ -165,10 +134,6 @@ def solve_L(L, b):
             s += L[i][p] * y[p]
         y[i] = b[i] - s
     return y
-
-y = solve_L(L, b)
-display([y], 'solve for L')
-
 def solve_U(U, y):
     n = len(U)
     x = [0] * n
@@ -184,10 +149,6 @@ def solve_U(U, y):
             s += U[n-i-1][p] * x[p]
         x[n-i-1] = (y[n-i-1] - s) / U[n-i-1][n-i-1]
     return x
-
-x = solve_U(U, y)
-display([x], 'solve for U')
-
 def prove(A, x):
     n = len(A)
     res = [0] * n
@@ -195,4 +156,23 @@ def prove(A, x):
         for j in range(n):
             res[i] += A[i][j] * x[j]
     return res
+
+display(A, "A matrix")
+display([b], "b vector")
+L,U = LU(A)
+display(U, "U matrix")
+display(L, "L matrix")
+display(prois(U, L), "R mult of L and U")
+print('det of A', determinant_recursive(A))
+print('det L * det U', determinant_recursive(L) * determinant_recursive(U))
+inv = getMatrixInverse(A)
+display(inv, 'invert matrix A')
+# inv_U = getMatrixInverse(U)
+# inv_L = getMatrixInverse(L)
+# inv_LU = prois(inv_U, inv_L)
+# display(inv_LU, 'invert matrix LU')
+y = solve_L(L, b)
+display([y], 'solve for L')
+x = solve_U(U, y)
+display([x], 'solve for U')
 display([prove(A,x)], 'prove for A')

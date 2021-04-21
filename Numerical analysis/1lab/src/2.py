@@ -1,6 +1,14 @@
 A = [[-14,-6],[-9,15,-1],[1,-11,1],[-7,12,3],[6,-7]]
 b = [-78,-73,-38,77,91]
 
+def display(m,t):
+    """
+    display matrix row by row and print text t before it
+    """
+    print(t)
+    for row in m:
+        print(row)
+    print('')
 def solve(m, b):
     y = [None] * len(m)
     alpha = [None] * len(m)
@@ -28,7 +36,6 @@ def solve(m, b):
             x[len(m)-i-1] = alpha[len(m)-i-1] * x[len(m)-i] + beta[len(m)-i-1]
     # print('x', x)
     return x
-x = solve(A,b)
 def make_trig_matrix(A):
     m = []
     for i in range(len(A)):
@@ -45,13 +52,6 @@ def make_trig_matrix(A):
             m[i][i] = A[i][1]
             m[i][i+1] = A[i][2]
     return m
-def display(A, word):
-    print(word)
-    for line in A:
-        print(line)
-    print()
-display(make_trig_matrix(A),'trig matrix')
-display([b],'b vector')
 def prove(A, x):
     n = len(A)
     res = [0] * n
@@ -59,4 +59,8 @@ def prove(A, x):
         for j in range(n):
             res[i] += A[i][j] * x[j]
     return res
+
+x = solve(A,b)
+display(make_trig_matrix(A),'trig matrix')
+display([b],'b vector')
 display([prove(make_trig_matrix(A),x)], 'prove for x')
