@@ -125,7 +125,7 @@ while True:
     R = prois(transpose(Q),A)
     A = prois(R,Q)
     num_of_it += 1
-    if error(A,err) or num_of_it == 100:
+    if error(A,err):
         display(A, 'res')
         print('num_of_it',num_of_it)
         display([solve(A)], 'self numbers')
