@@ -23,32 +23,21 @@ def m_zero(n):
             r.append(0)
         res.append(r)
     return res
-def Gaus(A):
+def U(A):
     U = copy.deepcopy(A)
-    L = m_zero(len(A))
-    n = len(A)
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                L[i][j] = 1
-
-    for i in range(n-1):
-        for j in range(i+1, n):
+    for i in range(len(A)-1):
+        for j in range(i+1, len(A)):
             do_d = (-U[j][i]) / U[i][i]
-            for k in range(i, n):
+            for k in range(i, len(A)):
                 U[j][k] = U[i][k] * do_d + U[j][k]
-
-
-        display(U, 'm')
-def LU(A):
+    return U
+def L(A):
     U = copy.deepcopy(A)
     L = m_zero(len(A))
     n = len(A)
-
     for i in range(n):
         for j in range(i,n):
             L[j][i] = U[j][i] / U[i][i]
-
     for k in range(1,n):
         for i in range(k-1,n):
             for j in range(i,n):
@@ -56,8 +45,7 @@ def LU(A):
         for i in range(k,n):
             for j in range(k-1,n):
                 U[i][j] = U[i][j] - L[i][k-1] * U[k-1][j]
-
-    return L,U
+    return L
 def prois(U, L):
     n = len(U)
     R = m_zero(n)
@@ -157,20 +145,20 @@ def prove(A, x):
             res[i] += A[i][j] * x[j]
     return res
 
-display(A, "A matrix")
+# display(A, "A matrix")
 display([b], "b vector")
-L,U = LU(A)
-display(U, "U matrix")
-display(L, "L matrix")
-display(prois(U, L), "R mult of L and U")
-print('det of A', determinant_recursive(A))
-print('det L * det U', determinant_recursive(L) * determinant_recursive(U))
-inv = getMatrixInverse(A)
-display(inv, 'invert matrix A')
-# inv_U = getMatrixInverse(U)
-# inv_L = getMatrixInverse(L)
-# inv_LU = prois(inv_U, inv_L)
-# display(inv_LU, 'invert matrix LU')
+L,U = L(A),U(A)
+# display(U, "U matrix")
+# display(L, "L matrix")
+# display(prois(U, L), "R mult of L and U")
+# print('det of A', determinant_recursive(A))
+# print('det L * det U', determinant_recursive(L) * determinant_recursive(U))
+# inv = getMatrixInverse(A)
+# display(inv, 'invert matrix A')
+# # inv_U = getMatrixInverse(U)
+# # inv_L = getMatrixInverse(L)
+# # inv_LU = prois(inv_U, inv_L)
+# # display(inv_LU, 'invert matrix LU')
 y = solve_L(L, b)
 display([y], 'solve for L')
 x = solve_U(U, y)

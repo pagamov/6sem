@@ -25,16 +25,12 @@ def solve(m, b):
             y[i] = m[i][1] + m[i][0] * alpha[i-1]
             alpha[i] = -1 * m[i][2] / y[i]
             beta[i] = (b[i] - m[i][0] * beta[i-1]) / y[i]
-    # print('y', y)
-    # print('alpha', alpha)
-    # print('beta', beta)
     x = [0] * len(m)
     for i in range(len(m)):
         if i == 0:
             x[len(m)-i-1] = beta[len(m)-i-1]
         else:
             x[len(m)-i-1] = alpha[len(m)-i-1] * x[len(m)-i] + beta[len(m)-i-1]
-    # print('x', x)
     return x
 def make_trig_matrix(A):
     m = []
