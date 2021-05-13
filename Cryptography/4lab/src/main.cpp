@@ -86,26 +86,26 @@ struct EL_point {
         y = y_in;
         el = ptr;
     }
-    EL_point operator - () const {
+    EL_point operator-() const {
         return { x, el->p - y, el };
     }
-    EL_point operator = (const EL_point& p) {
+    EL_point operator=(const EL_point& p) {
         x = p.x;
         y = p.y;
         el = p.el;
         return *this;
     }
-    bool operator == (const EL_point& point) const {
+    bool operator==(const EL_point& point) const {
         if (x != point.x || y != point.y)
             return false;
         return true;
     }
-    bool operator != (const EL_point& p) const {
+    bool operator!=(const EL_point& p) const {
         if (*this == p)
             return false;
         return true;
     }
-    EL_point operator + (const EL_point& point) const {
+    EL_point operator+(const EL_point& point) const {
         if (*this == -point)
             return {0, 0, el};
         else if (*this == point) {
@@ -123,8 +123,7 @@ struct EL_point {
     }
 };
 
-int main()
-{
+int main() {
     EL e(502, 31, 307969);
     size_t order;
     vector <pair <size_t, size_t>> points;
