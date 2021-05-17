@@ -57,6 +57,7 @@ def prove(A, x):
     return res
 
 x = solve(A,b)
+print('x',x)
 display(make_trig_matrix(A),'trig matrix')
 display([b],'b vector')
 display([prove(make_trig_matrix(A),x)], 'prove for x')

@@ -1,5 +1,7 @@
 from math import cos, sin, log10
 
+# make err from vector norm
+
 def f1(x,y):
     return x - cos(y) - 1
 def f2(x,y):
@@ -43,7 +45,7 @@ def A2(x,y):
     a22 = f2(x,y)
     return a11*a22 - a12*a21
 
-print('метод Ньтона')
+print('метод Ньтона') # call it other way???
 x, y = x_s, y_s
 num_of_it = 0
 while True:

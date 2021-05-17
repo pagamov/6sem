@@ -2,7 +2,11 @@ import copy
 import math
 # https://old.math.tsu.ru/EEResources/cm/text/6_2_3.htm
 A = [[8,2,-1], [2,-5,-8], [-1,-8,-5]]
-err = 10**-4
+err = 10**-10
+# new error function based on
+
+# new task make matrix with num
+#
 
 # λ_1≈-13.024
 # λ_2≈2.225

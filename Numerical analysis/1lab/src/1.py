@@ -88,7 +88,6 @@ def getMatrixDeternminant(m):
     #base case for 2x2 matrix
     if len(m) == 2:
         return m[0][0]*m[1][1]-m[0][1]*m[1][0]
-
     determinant = 0
     for c in range(len(m)):
         determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
@@ -99,7 +98,6 @@ def getMatrixInverse(m):
     if len(m) == 2:
         return [[m[1][1]/determinant, -1*m[0][1]/determinant],
                 [-1*m[1][0]/determinant, m[0][0]/determinant]]
-
     #find matrix of cofactors
     cofactors = []
     for r in range(len(m)):
@@ -148,9 +146,9 @@ def prove(A, x):
 # display(A, "A matrix")
 display([b], "b vector")
 L,U = L(A),U(A)
-# display(U, "U matrix")
-# display(L, "L matrix")
-# display(prois(U, L), "R mult of L and U")
+display(U, "U matrix")
+display(L, "L matrix")
+display(prois(U, L), "R mult of L and U")
 # print('det of A', determinant_recursive(A))
 # print('det L * det U', determinant_recursive(L) * determinant_recursive(U))
 # inv = getMatrixInverse(A)

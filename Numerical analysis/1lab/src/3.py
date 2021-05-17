@@ -1,4 +1,5 @@
 import copy
+# make new error func base on matrix
 
 A = [[26,-9,-8,8], [9,-21,-2,8], [-3,2,-18,8], [1,-6,-1,11]]
 b = [20,-164,140,-81]

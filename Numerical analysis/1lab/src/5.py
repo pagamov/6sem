@@ -1,6 +1,9 @@
 import copy
 import math
 
+# task run bigger matrix and remove Gram_Schmidt!
+# run complex matrix... 
+
 A = [[-4,-6,-3],[-1,5,-5],[6,2,5]]
 # A = [[3,-7,-1],[-9,-8,7],[5,2,2]]
 err = 10**-4
