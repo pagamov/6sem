@@ -13,59 +13,56 @@ $t_{k}$ --- шаг выбирается из условия убывания ф�
 
 Изменяемые параметры метода: величина шага $t_{k}$.
 
-\includegraphics[width=0.8\linewidth]{images/3_prot.jpg}\\
-\includegraphics[width=0.8\linewidth]{images/3_image.jpg}\\
+\includegraphics[width=0.8\linewidth]{images/3_prot}\\
+\includegraphics[width=0.8\linewidth]{images/3_graf}\\
 
 \textbf{Последняя итерация}:\\
-$x^{5} = x^{4} - t_{4}H^{-1}|x^{4}| \nabla f(x^{4})$\\
-$x^{4} = 
+$x^{14} = x^{13} - t_{13}H^{-1}|x^{13}| \nabla f(x^{13})$\\
+$x^{13} = 
 \begin{pmatrix}
-  0.65385\\
-  0.84135
+  -0.18868\\
+  -0.03518
 \end{pmatrix}
 $\\
 
-$t_{4} = 0.5$\\
+$t_{13} = 0.5$\\
 $ % recalc
-H^{-1}(x^{4}) = 
+H^{-1}(x^{14}) = 
 \begin{pmatrix}
-  0.0717 & 0.0051\\
-  0.0051 & 0.0717
+  0.078192 & -0.008555\\
+  -0.008555 & 0.078192
 \end{pmatrix}
 $\\
 
 $
-\nabla f(x^{4}) = 
+\nabla f(x^{13}) = 
 \begin{pmatrix}
-  14x_{1} - x_{2} + 14\\
-  14x_{2} - x_{1} - 7
+  10x_{1} + 3x_{2} + 2\\
+  12x_{2} + 3x_{1} + 1
 \end{pmatrix}
 =
 \begin{pmatrix}
-  22.3125\\
-  4.125
+  0.00769\\
+  0.01184
 \end{pmatrix}
 $\\
 
 $
-x^{5} = 
+x^{14} = 
 \begin{pmatrix}
-  0.65385\\
-  0.84135
+  -0.18868\\
+  -0.03518
 \end{pmatrix}
 -
 0.5
 \begin{pmatrix}
-  1.62308\\
-  0.41058
+  0.0005\\
+  0.00086
 \end{pmatrix}
 =
 \begin{pmatrix}
-  -0.15769\\
-  0.63606
+  -0.18893\\
+  -0.03561
 \end{pmatrix}
 $\\
-
-$||\nabla f(x^{5})|| \approx 11.3453 > \varepsilon$
-
 \pagebreak
