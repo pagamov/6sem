@@ -9,9 +9,9 @@ size_t clever_mod(const int64_t &a, const size_t &p) {
     return res >= 0 ? res : p + res;
 }
 
-size_t gcd(const size_t& a, const size_t& b) {
-    return b ? gcd(b, a % b) : a;
-}
+// size_t gcd(const size_t& a, const size_t& b) {
+//     return b ? gcd(b, a % b) : a;
+// }
 
 int64_t gcd(const int64_t &a, const size_t &b, int64_t &x, int64_t &y) {
     if (a == 0) {

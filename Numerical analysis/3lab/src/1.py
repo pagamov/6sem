@@ -2,6 +2,8 @@ from math import pi, tan, sin
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Newton and Lagrange spline's
+
 def f(x):
     return 1/tan(x)
 
