@@ -68,8 +68,10 @@ struct EL {
             y_get = clever_mod((x * x * x + a * x + b), p);
             for (y = sqr(y_get); y < p; y++)
                 if ((y * y) % p == y_get) {
-                    if (!count)
+                    if (!count) {
                         vec.push_back({ x, y });
+                    }
+                    // cout << "new: " << x << ' ' << y << " all: " << vec.size() << endl;
                     count++;
                 }
         }
@@ -100,11 +102,11 @@ struct EL_point {
             return false;
         return true;
     }
-    bool operator!=(const EL_point& p) const {
-        if (*this == p)
-            return false;
-        return true;
-    }
+    // bool operator!=(const EL_point& p) const {
+    //     if (*this == p)
+    //         return false;
+    //     return true;
+    // }
     EL_point operator+(const EL_point& point) const {
         if (*this == -point)
             return {0, 0, el};
@@ -124,7 +126,8 @@ struct EL_point {
 };
 
 int main() {
-    EL e(502, 31, 307969);
+    // EL e(502, 31, 307969);
+    EL e(1488, 228, 9181);
     size_t order;
     vector <pair <size_t, size_t>> points;
 
@@ -133,7 +136,8 @@ int main() {
     EL_point s(0, 0, nullptr);
 
     clock_t start = clock();
-    cout << "order: " << (order = e.find(points)) << endl;
+    order = e.find(points);
+    cout << "order: " << order << endl;
 
     size_t min = order;
     for (size_t i = 0; i < points.size(); i++) {
