@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Floppa*</title>
+        <!-- <script src="index.js"></script> -->
+        <link rel="stylesheet" type="text/css" href="choose.css">
+        <!-- <link href='//fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800'rel='stylesheet' type='text/css'> -->
+    </head>
+
+    <body>
+        <div id="choose_window">
+            <div class="Row">
+                <div class="Column" style="text-align:left; width:25%">
+                    <img src="../pic/back-plane.png" style="width:100%;height:15%;">
+                </div>
+                <div class="Column Floppa_title">
+                    <i>Floppa*</i>
+                </div>
+                <div class="Column"></div>
+            </div>
+
+            <div class="Row" style="height:100px">
+                <div class="Column Big_text" style="width:80%">
+                    Выберите тип классификатора
+                </div>
+                <div class="Column"></div>
+            </div>
+
+            <div class="Row" style="height:60px">
+                <div class="Column Small_text" style="width:80%">
+                    Уточнение от том, что такое классификатор.
+                </div>
+                <div class="Column"></div>
+            </div>
+
+            <div class="Row" style="height:100px">
+                <div class="Column" style="width:70%">
+                    <div class="Row" style="height:100px">
+                        <div class="Column" style="text-align:center;">
+                            <img src="../pic/cat.jpg" style="width:90%;align:center"></img>
+                            <i>cat</i>
+                        </div>
+                        <div class="Column" style="text-align:center;">
+                            <img src="../pic/cat.jpg" style="width:90%"></img>
+                            <i>cat</i>
+                        </div>
+                        <div class="Column" style="text-align:center;">
+                            <img src="../pic/cat.jpg" style="width:90%"></img>
+                            <i>cat</i>
+                        </div>
+                        <div class="Column" style="text-align:center;">
+                            <img src="../pic/cat.jpg" style="width:90%"></img>
+                            <i>cat</i>
+                        </div>
+                        <div class="Column" style="vertical-align:middle;">
+                            <input id="show_more_b" type="button" class="knopka01" value="Показать&#x00A;больше" onclick="show_more()"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="Column"></div>
+            </div>
+
+            <div class="Row" style="height:80px">
+                <div class="Column" style="width:50%;">
+                    <input id="add_more_b" type="button" class="knopka02" value="Добавить" onclick=add_more()></input>
+                </div>
+                <div class="Column"></div>
+            </div>
+        </div>
+
+        <script>
+            function show_more() {
+                console.log('show more')
+                var shm_b = document.getElementById('show_more_b')
+
+            }
+            function add_more() {
+                console.log('add more');
+                var add_b = document.getElementById('add_more_b');
+            }
+        </script>
+    </body>
+</html>

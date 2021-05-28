@@ -1,0 +1,130 @@
+body {
+  background-image: url('../pic/back-pic2.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+.layer {
+    overflow: scroll; /* Добавляем полосы прокрутки */
+    width: 100%; /* Ширина блока */
+    height: 400px; /* Высота блока */
+    padding: 5px; /* Поля вокруг текста */
+    border: solid 1px black; /* Параметры рамки */
+}
+
+.Row {
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    /* border-spacing: 10px; /*Optional*/ */
+}
+
+.Column {
+    display: table-cell;
+    /* background-color: white; /*Optional*/ */
+}
+
+.table_for_class {
+    border-radius: 5px;
+    background-color:white;
+    border:black solid;
+}
+
+div {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+.Floppa_title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 60px;
+    font-weight: 100;
+    text-align: left;
+    padding-left: 15px;
+    vertical-align: middle;
+    color: #195a5e;
+}
+
+/* .Big_text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    font-weight: 100;
+    text-align: center;
+    vertical-align: bottom;
+    color: #195a5e;
+}
+
+.Small_text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+    text-align: center;
+    color: #195a5e;
+} */
+
+.t_monts {
+    font-family: 'Montserrat', sans-serif;
+    font-size:24px;
+    font-weight: 100;
+    border-width: thin;
+    /* margin-left:10%; */
+    /* padding-left:10%; */
+}
+
+input[type=text] {
+    /* text-align: center; */
+    border-radius: 5px;
+    display: block;
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    background: white;
+    border-color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size:24px;
+    font-weight: 100;
+    border-width: thin;
+}
+
+/* input[type=text]:focus {
+  background-color: lightblue;
+} */
+
+.center_b {
+    vertical-align: middle;
+    text-align: center;
+    /* margin-left: 80%; */
+}
+
+.drop {
+    width:50%;
+    height:250px;
+    border-radius: 10px;
+    background:white;
+    margin-left:25%;
+}
+
+.knopka01 {
+  display: block;
+  margin: auto;
+  width: 80%;
+  height: 100%;
+  font-size: 20px;
+  text-decoration: none;
+  text-shadow: 0 1px rgba(255,255,255,.2), 0 -1px rgba(0,0,0,.8);
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  background: #195a5e;
+  color: white;
+}
+.knopka01:active {
+  padding-bottom: 1px;
+  box-shadow:
+   inset rgba(0,0,0,1) 0 1px 3px,
+   inset rgba(0,0,0,.6) 0 -2px 5px,
+   inset rgba(252,255,255,.7) 0 2px 5px,
+   0 1px rgba(255,255,255,.08);
+  color: rgb(128,207,214);
+}

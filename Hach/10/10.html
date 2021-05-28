@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Floppa*</title>
+        <link rel="stylesheet" type="text/css" href="10.css">
+    </head>
+
+    <body>
+        <div id="choose_window">
+            <div class="Row">
+                <div class="Column" style="text-align:left; width:25%">
+                    <img src="../pic/back-plane.png" style="width:100%;">
+                </div>
+                <div class="Column Floppa_title">
+                    <i>Floppa*</i>
+                </div>
+                <div class="Column"></div>
+            </div>
+
+            <div class="Row" style="height:40px;width:100%">
+                <div class="Column center_b">
+                    <input id="b1" type="button" class="knopka01" value="Назад" onclick=go_back()></input>
+                </div>
+                <div class="Column center_b"></div>
+                <div class="Column center_b"></div>
+                <div class="Column center_b"></div>
+                <div class="Column center_b"></div>
+            </div>
+
+            <div class="Row" style="height:10px;width:100%">
+
+            </div>
+
+            <div class="Row drop">
+
+            </div>
+
+            <div class="Row" style="height:10px;width:100%">
+
+            </div>
+
+            <div class="Row" style="height:30px;width:100%">
+                <div class="Column center_b">
+                </div>
+                <div class="Column center_b">
+                    <input id="b1" type="button" class="knopka01" style="width:50%" value="Обработать" onclick=go_back()></input>
+                </div>
+                <div class="Column center_b">
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function go_back() {
+                console.log('go_back')
+            }
+            function prev_picture() {
+                console.log('prev_picture')
+            }
+            function next_picture() {
+                console.log('next_picture')
+            }
+            function zoom_in() {
+                console.log('zoom_in')
+            }
+            function zoom_out() {
+                console.log('zoom_out')
+            }
+        </script>
+    </body>
+</html>

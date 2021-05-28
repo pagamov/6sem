@@ -1,0 +1,57 @@
+.login_text {
+    text-align: center;
+    color: solid black;
+    font-size: 24px;
+}
+
+.login_button {
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.Row {
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+}
+
+.Column {
+    display: table-cell;
+    background-color: white; /*Optional*/
+}
+
+.pre_div {
+    border: 1px solid black; /* Параметры рамки */
+    padding: 5px;
+}
+
+#drop_zone {
+  border: 5px solid blue;
+  width:  200px;
+  height: 100px;
+}
+
+.nowrap {
+    white-space: nowrap
+}
+
+.center {
+    text-align: center;
+}
+
+
+
+.button1 {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    /* padding: 15px 32px; */
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 16px;
+}

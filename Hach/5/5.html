@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Floppa*</title>
+        <link rel="stylesheet" type="text/css" href="5.css">
+    </head>
+
+    <body>
+        <div id="choose_window">
+            <div class="Row">
+                <div class="Column" style="text-align:left; width:25%">
+                    <img src="../pic/back-plane.png" style="width:100%;">
+                </div>
+                <div class="Column Floppa_title">
+                    <i>Floppa*</i>
+                </div>
+                <div class="Column"></div>
+            </div>
+
+            <div class="Row" style="height:40px;width:100%">
+                <div class="Column center_b">
+                    <input id="b1" type="button" class="knopka01" value="Назад" onclick=go_back()></input>
+                </div>
+                <div class="Column center_b"></div>
+                <div class="Column center_b"></div>
+                <div class="Column center_b"></div>
+                <div class="Column center_b"></div>
+            </div>
+
+            <div class="pic_box" style="width:100%; height:300px">
+                <!-- canvas here -->
+                <x class="t_monts">canvas here</x>
+            </div>
+
+            <div class="Row" style="height:40px">
+                <div class="Column"></div>
+                <div class="Column">
+                    <div class="Row">
+                        <div class="Column center_b">
+                            <input id="b1" type="button" class="knopka01" value="<" onclick=prev_picture()></input>
+                        </div>
+                        <div class="Column t_monts" style="text-align:center;vertical-align:center">
+                            {1}/{2}
+                        </div>
+                        <div class="Column center_b">
+                            <input id="b1" type="button" class="knopka01" value=">" onclick=next_picture()></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="Column">
+                    <div class="Row">
+                        <div class="Column"></div>
+                        <div class="Column center_b">
+                            <input id="b1" type="button" class="knopka01" value="+" onclick=zoom_in()></input>
+                        </div>
+                        <div class="Column center_b">
+                            <input id="b1" type="button" class="knopka01" value="-" onclick=zoom_out()></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function go_back() {
+                console.log('go_back')
+            }
+            function prev_picture() {
+                console.log('prev_picture')
+            }
+            function next_picture() {
+                console.log('next_picture')
+            }
+            function zoom_in() {
+                console.log('zoom_in')
+            }
+            function zoom_out() {
+                console.log('zoom_out')
+            }
+        </script>
+    </body>
+</html>
