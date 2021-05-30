@@ -8,7 +8,7 @@
         for right = (or (position-if #'whitespace-char-p string
                                      :start left)
                         len)
-        unless (= right left)	; исключить пустые слова
+        unless (= right left)
           collect (subseq string left right)
         while (< right len)))
 
