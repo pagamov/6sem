@@ -1,0 +1,147 @@
+%%% пример отчета взян с сайта http://k806.ystok.ru/
+
+\documentclass[15pt]{extarticle}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+% margin from paper borders
+\usepackage[margin={0.8in, 0.3in}]{geometry}
+% displaystyle в каждом мас моде
+\everymath{\displaystyle}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    keepspaces = true,
+    tabsize=2
+}
+
+
+
+\begin{document}
+
+\section*{Отчет по лабораторной работе №\,4
+по курсу \guillemotleft  Функциональное программирование\guillemotright}
+
+\begin{flushright}
+Студент группы 8О-307 МАИ \textit{Гамов Павел}, \textnumero 4 по списку \\
+\makebox[7cm]{Контакты: {\tt pagamov@gmail.com} \hfill} \\
+\makebox[7cm]{Работа выполнена: 30.05.2021 \hfill} \\
+\ \\
+Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
+\makebox[7cm]{Отчет сдан: \hfill} \\
+\makebox[7cm]{Итоговая оценка: \hfill} \\
+\makebox[7cm]{Подпись преподавателя: \hfill} \\
+
+\end{flushright}
+
+\section{Тема работы}
+Знаки и строки
+
+\section{Цель работы}
+Научиться работать с литерами (знаками) и строками при помощи функций обработки строк и общих функций работы с последовательностями.
+
+\section{Задание (вариант № 4.15/2)}
+Запрограммировать на языке Коммон Лисп функцию-предикат, принимающую один аргумент - текст.
+Функция должна возвращать истину, если текст содержит литеры, отличные от латинских и русских букв и пробела.
+
+
+\section{Оборудование студента}
+macOS Catalina 10.15.7 Intel Core i5 2.3 GHz 8 ГБ RAM
+
+\section{Программное обеспечение}
+macOS, среда {\tt vim + sbcl}
+
+\section{Идея, метод, алгоритм}
+Создаем переменную found которая будет считать количество символов которые не входят в алфавиты. Так как мы работаем с текстом, делаем первый dolist разбивая текст на предложения, далее для каждого слова, которые мы разбиваем функцией word-list, которую я взял с сайта, мы пробегаем по каждому символу и если он не входит в алфавиты, прибавляем единицу к found. Далее пройдя все чары, если переменная found больше нуля, возвращается True иначе False.
+
+\section{Сценарий выполнения работы}
+Разобрался с тем как правильно итерировать по словам, далее включил функцию word-list, на самом деле ее можно было избежать, можно итерировать прямо по строке, вместо слов.
+
+\section{Распечатка программы и её результаты}
+
+\subsection{Исходный код}
+
+\begin{lstlisting}
+(defun whitespace-char-p (char)
+  (member char '(#\Space #\Tab #\Newline)))
+
+(defun word-list (string)
+  (loop with len = (length string)
+        for left = 0 then (1+ right)
+        for right = (or (position-if #'whitespace-char-p string
+                                     :start left)
+                        len)
+        unless (= right left)	; исключить пустые слова
+          collect (subseq string left right)
+        while (< right len)))
+
+(defun is-ordinar (char)
+    (or (member char (coerce "ABCDEFGHIGKLMNOPQRSTUVWXYZ" 'list))
+        (member char (coerce "abcdefghigklmnopqrstuvwxyz" 'list))
+        (member char (coerce "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" 'list))
+        (member char (coerce "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" 'list))))
+
+(defun if-text-is-ordinary(txt)
+    (let ((found 0))
+        (dolist (sentence txt)
+            (dolist (word (word-list sentence))
+                (loop for c across word do
+                    (if (not (is-ordinar c))
+                        (setf found (+ found 1))))))
+        (> found 0)))
+
+(print (if-text-is-ordinary '("русский текст, где есть знаки препинания" "тут тоже есть, ведь так?")))
+(print (if-text-is-ordinary '("русский текст без знаков препинания" "тут тоже их нет")))
+
+(print (if-text-is-ordinary '("eng text with punctuation marks." "here another one!")))
+(print (if-text-is-ordinary '("eng text without punctuation marks." "тут тоже их нет")))
+\end{lstlisting}
+
+\subsection{Результаты работы}
+
+\begin{lstlisting}
+T
+NIL
+T
+NIL
+\end{lstlisting}
+
+\section{Дневник отладки}
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+Дата     & Событие    & Действие по исправлению   & Примечание \\
+\hline
+& & & \\
+\hline
+\end{tabular}
+
+\section{Замечания автора по существу работы}
+Функции доступа к строке похожи на Си-шный вариант. Работать удобно, много встроенных функций изменения, добавления, разбора строки, а также функций сравнения и включения символов.
+
+\section{Выводы}
+В этой лабораторной я научился работать со строками на языке Lisp. Данная работа показала эффективность работы языка с типом строки.
+
+\end{document}
