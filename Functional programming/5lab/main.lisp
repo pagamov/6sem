@@ -2,17 +2,17 @@
  ((start :initarg :start :accessor line-start)
   (end   :initarg :end   :accessor line-end)))
 
-(defmethod print-object ((lin line) stream)
-  (format stream "[LINE ~s ~s]"
-          (line-start lin) (line-end lin)))
+; (defmethod print-object ((lin line) stream)
+;   (format stream "[LINE ~s ~s]"
+;           (line-start lin) (line-end lin)))
 
 (defclass cart ()
  ((x :initarg :x :reader cart-x)
   (y :initarg :y :reader cart-y)))
 
-(defmethod print-object ((c cart) stream)
-  (format stream "[CART x ~d y ~d]"
-          (cart-x c) (cart-y c)))
+; (defmethod print-object ((c cart) stream)
+;   (format stream "[CART x ~d y ~d]"
+;           (cart-x c) (cart-y c)))
 
 (defclass polar ()
  ((radius :initarg :radius :accessor radius)
@@ -24,12 +24,12 @@
 (defmethod cart-y ((p polar))
   (* (radius p) (sin (angle p))))
 
-(setq lin (make-instance 'line
-           :start (make-instance 'cart :x 2 :y 1)
-           :end (make-instance 'cart :x 2 :y 5)))
-
-(defgeneric containing-rect (shape)
-    )
+; (setq lin (make-instance 'line
+;            :start (make-instance 'cart :x 2 :y 1)
+;            :end (make-instance 'cart :x 2 :y 5)))
+;
+; (defgeneric containing-rect (shape)
+;     )
 
 (defmethod containing-rect ((l line))
     (let ((x1 (cart-x (line-start l)))
