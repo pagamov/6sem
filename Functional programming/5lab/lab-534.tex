@@ -41,13 +41,13 @@
 
 \begin{document}
 
-\section*{Отчет по лабораторной работе №\,4
+\section*{Отчет по лабораторной работе №\,5
 по курсу \guillemotleft  Функциональное программирование\guillemotright}
 
 \begin{flushright}
 Студент группы 8О-307 МАИ \textit{Гамов Павел}, \textnumero 4 по списку \\
 \makebox[7cm]{Контакты: {\tt pagamov@gmail.com} \hfill} \\
-\makebox[7cm]{Работа выполнена: 30.05.2021 \hfill} \\
+\makebox[7cm]{Работа выполнена: 31.05.2021 \hfill} \\
 \ \\
 Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
 \makebox[7cm]{Отчет сдан: \hfill} \\
@@ -57,15 +57,30 @@
 \end{flushright}
 
 \section{Тема работы}
-Знаки и строки
+Обобщённые функции, методы и классы объектов
 
 \section{Цель работы}
-Научиться работать с литерами (знаками) и строками при помощи функций обработки строк и общих функций работы с последовательностями.
+Научиться определять простейшие классы, порождать экземпляры классов, считывать и изменять значения слотов, научиться определять обобщённые функции и методы.
 
-\section{Задание (вариант № 4.15/2)}
-Запрограммировать на языке Коммон Лисп функцию-предикат, принимающую один аргумент - текст.
-Функция должна возвращать истину, если текст содержит литеры, отличные от латинских и русских букв и пробела.
+\section{Задание (вариант № 5.34/2)}
+Объемлющий прямоугольник для геометрической фигуры - это такой, который
+полностью заключает в себе фигуру,
+имеет стороны, параллельные осям координат.
+Пусть класс окружность определён следующим образом:
 
+(defclass circle ()
+
+ ((center :initarg :center :reader center)   ; центр - экземпляр cart или polar
+ 
+  (radius :initarg :radius :reader radius))) ; радиус - число
+  
+Задание: Написать обобщённую функцию и метод, возвращающий список из четырех вершин объемлющего четырёхугольника окружности.
+
+(defgeneric containing-rect (shape))
+
+(defmethod containing-rect ((c circle))
+
+  ...)
 
 \section{Оборудование студента}
 macOS Catalina 10.15.7 Intel Core i5 2.3 GHz 8 ГБ RAM
@@ -74,58 +89,66 @@ macOS Catalina 10.15.7 Intel Core i5 2.3 GHz 8 ГБ RAM
 macOS, среда {\tt vim + sbcl}
 
 \section{Идея, метод, алгоритм}
-Создаем переменную found которая будет считать количество символов которые не входят в алфавиты. Так как мы работаем с текстом, делаем первый dolist разбивая текст на предложения, далее для каждого слова, которые мы разбиваем функцией word-list, которую я взял с сайта, мы пробегаем по каждому символу и если он не входит в алфавиты, прибавляем единицу к found. Далее пройдя все чары, если переменная found больше нуля, возвращается True иначе False.
+Написать два класса для разного представления точки, перегрузить функцию print, чтобы она правильно печатала тип cart.  Далее написать главную функцию обрамления окружности.
 
 \section{Сценарий выполнения работы}
-Разобрался с тем как правильно итерировать по словам, далее включил функцию word-list, на самом деле ее можно было избежать, можно итерировать прямо по строке, вместо слов.
+Создаем класс полярных и декартовых координат, делаем перевод из полярных в декартовы с помощью методов класса polar. Далее делаем класс circle, он имеет в себе начальную точку и радиус. Далее пишем метод обрамления круга прямоугольником. Метод простой, начиная с левой верхней точки по часовой стрелке получаем вершины прямоугольника путем сдвига на радиус центральной точки, создаем из этого массив и возвращаем.
 
 \section{Распечатка программы и её результаты}
 
 \subsection{Исходный код}
 
 \begin{lstlisting}
-(defun whitespace-char-p (char)
-  (member char '(#\Space #\Tab #\Newline)))
+(defclass circle ()
+ ((center :initarg :center :reader center)
+  (radius :initarg :radius :reader radius)))
 
-(defun word-list (string)
-  (loop with len = (length string)
-        for left = 0 then (1+ right)
-        for right = (or (position-if #'whitespace-char-p string
-                                     :start left)
-                        len)
-        unless (= right left)	; исключить пустые слова
-          collect (subseq string left right)
-        while (< right len)))
+(defgeneric containing-rect (shape))
+(defmethod containing-rect ((c circle))
+    (let ((x (cart-x (center c)))
+          (y (cart-y (center c)))
+          (r (radius c)))
+        (list (make-instance 'cart :x (- x r) :y (+ y r))
+              (make-instance 'cart :x (+ x r) :y (+ y r))
+              (make-instance 'cart :x (+ x r) :y (- y r))
+              (make-instance 'cart :x (- x r) :y (- y r)))))
 
-(defun is-ordinar (char)
-    (or (member char (coerce "ABCDEFGHIGKLMNOPQRSTUVWXYZ" 'list))
-        (member char (coerce "abcdefghigklmnopqrstuvwxyz" 'list))
-        (member char (coerce "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" 'list))
-        (member char (coerce "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" 'list))))
+(defclass polar ()
+ ((radius :initarg :radius :accessor radius)
+  (angle  :initarg :angle  :accessor angle)))
 
-(defun if-text-is-ordinary(txt)
-    (let ((found 0))
-        (dolist (sentence txt)
-            (dolist (word (word-list sentence))
-                (loop for c across word do
-                    (if (not (is-ordinar c))
-                        (setf found (+ found 1))))))
-        (> found 0)))
+(defclass cart ()
+ ((x :initarg :x :reader cart-x)
+  (y :initarg :y :reader cart-y)))
 
-(print (if-text-is-ordinary '("русский текст, где есть знаки препинания" "тут тоже есть, ведь так?")))
-(print (if-text-is-ordinary '("русский текст без знаков препинания" "тут тоже их нет")))
+(defmethod cart-x ((p polar))
+  (* (radius p) (cos (angle p))))
 
-(print (if-text-is-ordinary '("eng text with punctuation marks." "here another one!")))
-(print (if-text-is-ordinary '("eng text without punctuation marks." "тут тоже их нет")))
+(defmethod cart-y ((p polar))
+  (* (radius p) (sin (angle p))))
+
+(defmethod print-object ((c cart) stream)
+  (format stream "[CART x ~d y ~d]"
+          (cart-x c) (cart-y c)))
+
+(print (containing-rect (make-instance 'circle
+           :center (make-instance 'cart :x 4 :y 3)
+           :radius 5)))
+
+(print (containing-rect (make-instance 'circle
+           :center (make-instance 'polar :radius 5 :angle (/ pi 4))
+           :radius 5)))
 \end{lstlisting}
 
 \subsection{Результаты работы}
 
 \begin{lstlisting}
-T
-NIL
-T
-NIL
+([CART x -1 y 8] [CART x 9 y 8] [CART x 9 y -2] [CART x -1 y -2]) 
+
+([CART x -1.4644660940672622d0 y 8.535533905932738d0]
+ [CART x 8.535533905932738d0 y 8.535533905932738d0]
+ [CART x 8.535533905932738d0 y -1.4644660940672627d0]
+ [CART x -1.4644660940672622d0 y -1.4644660940672627d0])
 \end{lstlisting}
 
 \section{Дневник отладки}
@@ -139,9 +162,9 @@ NIL
 \end{tabular}
 
 \section{Замечания автора по существу работы}
-Функции доступа к строке похожи на Си-шный вариант. Работать удобно, много встроенных функций изменения, добавления, разбора строки, а также функций сравнения и включения символов.
+Замечаний не имею.
 
 \section{Выводы}
-В этой лабораторной я научился работать со строками на языке Lisp. Данная работа показала эффективность работы языка с типом строки.
+В данной работе я познакомился с классами и методами, реализовал несколько классов, научился получать к ним доступ, изменять параметры и писать методы.
 
 \end{document}

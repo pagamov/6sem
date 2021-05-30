@@ -2,7 +2,7 @@
  ((center :initarg :center :reader center)
   (radius :initarg :radius :reader radius)))
 
-(defgeneric containing-rect (shape))
+; (defgeneric containing-rect (shape))
 (defmethod containing-rect ((c circle))
     (let ((x (cart-x (center c)))
           (y (cart-y (center c)))
@@ -29,9 +29,6 @@
 (defmethod print-object ((c cart) stream)
   (format stream "[CART x ~d y ~d]"
           (cart-x c) (cart-y c)))
-
-
-
 
 (print (containing-rect (make-instance 'circle
            :center (make-instance 'cart :x 4 :y 3)
