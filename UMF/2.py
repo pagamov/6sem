@@ -15,11 +15,7 @@ def fi(n):
 def f(x,t):
     n = 2
     res = exp(-t) * (1 - alpha * x) / (1 - alpha * l)
-<<<<<<< HEAD
     while n < 10:
-=======
-    while n < 10000:
->>>>>>> 0390a8bef17fe4589d2aedcbf1f87a2b6725b564
         up1 = -1*alpha*(sin(fi(n)*l) - fi(n)*l) + (fi(n) * cos(fi(n)*l) - fi(n))
         down1 = (l/2 - alpha / (fi(n)**2 + alpha**2)) * (1 - alpha * l) * fi(n) * fi(n)
         r11 = cos(alpha * fi(n) * t) - sin(alpha*fi(n)*t) / (fi(n)*alpha)
@@ -41,7 +37,6 @@ def get_data(start,end,t):
         start += 0.0001
     return x,y
 
-<<<<<<< HEAD
 # while time < 10:
 x, y = get_data(0,l,time)
 plt.plot(x, [0]*len(x), label='t = ' + str(time))
@@ -67,12 +62,6 @@ plt.show()
 
 x, y = get_data(0,l,time)
 plt.plot(x, y[::-1], label='t = ' + str(time))
-=======
-while time < 10:
-    x, y = get_data(-l,2*l,time)
-    plt.plot(x, y, label='t = ' + str(time))
-    time += 5
->>>>>>> 0390a8bef17fe4589d2aedcbf1f87a2b6725b564
 
 plt.xlabel('X')
 plt.ylabel('Y')
