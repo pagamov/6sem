@@ -6,9 +6,6 @@ b = [20,-164,140,-81]
 err = 10**-4
 
 def display(m,t):
-    """
-    display matrix row by row and print text t before it
-    """
     print(t)
     for row in m:
         print(row)
@@ -27,7 +24,6 @@ def solve(A, b, err):
     x_ = [None] * len(A)
     x = [0] * len(A)
     num_of_it = 0
-
     while True:
         for i in range(len(A)):
             s = 0
@@ -52,6 +48,6 @@ def prove(A, x):
 display(A,'matrix A')
 display([b],'b vector')
 x, it = solve(A, b, err)
-display([x], 'solve')
+display([x], 'x vector')
 display([it], 'num_of_it')
 display([prove(A, x)], 'prove for x')

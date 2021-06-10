@@ -1,10 +1,8 @@
+# all done
 A = [[-14,-6],[-9,15,-1],[1,-11,1],[-7,12,3],[6,-7]]
 b = [-78,-73,-38,77,91]
 
 def display(m,t):
-    """
-    display matrix row by row and print text t before it
-    """
     print(t)
     for row in m:
         print(row)
@@ -57,7 +55,7 @@ def prove(A, x):
     return res
 
 x = solve(A,b)
-print('x',x)
+display([x],'x vector')
 display(make_trig_matrix(A),'trig matrix')
 display([b],'b vector')
 display([prove(make_trig_matrix(A),x)], 'prove for x')
