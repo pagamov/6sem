@@ -1,4 +1,4 @@
-# change var and f names
+# done
 import numpy as np
 from copy import copy, deepcopy
 from functools import reduce
