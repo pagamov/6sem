@@ -31,8 +31,6 @@ def make_b_spline_matrix(x,y):
             pass
         else:
             pass
-
-
     display(matrix,b)
 
 make_b_spline_matrix(x, y)
