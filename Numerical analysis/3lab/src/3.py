@@ -11,13 +11,10 @@ x_star = 2.666667
 x = [1,1.9,2.8,3.7,4.6,5.5]
 y = [2.4142,1.0818,0.50953,0.11836,-0.24008,-0.66818]
 
-# x = [0,1,2,3,4]
-# y = [0,1,-1,2,-2]
+# x = [0,1,2,3,4,5,6,7,8,9,10]
+# y = [0,1,-1,2,-2,3,-3,4,-4,5,-5]
 
-# x = [0,1.7,3.4,5.1,6.8,8.5]
-# y = [0.4713,1.0114,1.5515,2.0916,2.6317,3.1718]
-
-def make_spline_matrix(x, y, n, err=10**-10, text=False, X=None):
+def make_spline_matrix(x, y, n, err=10**-5, text=False):
     # сделаем матрицу коэф а размерности n+1
     A, b, n = [], [], n+1
     for i in range(n):
@@ -62,20 +59,15 @@ def make_spline_matrix(x, y, n, err=10**-10, text=False, X=None):
         resy.append(sum([a_[j] * pow(start, j) for j in range(len(a_))]))
         start += 0.1 # сделать другой step
     # вычислим квадрат ошибок
-    if text:
-        yy = [sum([a_[j] * pow(num, j) for j in range(len(a_))]) for num in x]
-        print('error =', sqrt(sum(list(map(lambda a, b: pow(a - b,2), yy, y)))))
+    # if text:
+    yy = [sum([a_[j] * pow(num, j) for j in range(len(a_))]) for num in x]
+    print('n =', n-1, 'error =', sqrt(sum(list(map(lambda a, b: pow(a - b,2), yy, y)))))
     # возвратим результат
-    if X != None:
-        return sum([a_[j] * pow(X, j) for j in range(len(a_))])
-    else:
-        return resx, resy
+    return resx, resy
 
-x_1, y_1 = make_spline_matrix(x, y, 1, err=10**-2, text=False)
-x_2, y_2 = make_spline_matrix(x, y, 2, err=10**-2, text=False)
-x_3, y_3 = make_spline_matrix(x, y, 3, err=10**-2, text=False)
-
-# print('Y =', make_spline_matrix(x, y, 3, err=10**-2, text=False, X = x_star))
+x_1, y_1 = make_spline_matrix(x, y, 1)
+x_2, y_2 = make_spline_matrix(x, y, 2)
+x_3, y_3 = make_spline_matrix(x, y, 3)
 
 plt.plot(x, y, label='main')
 plt.plot(x_1, y_1, label='spline 1')

@@ -1,81 +1,66 @@
-# done
 from math import pi, tan, sin, pow, sqrt
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
 
-# cubic spline
-
-x_star = 2.666667
-
 x = [1,1.9,2.8,3.7,4.6]
 y = [2.4142,1.0818,0.50953,0.11836,-0.24008]
 
-# x = [0,1,2,3,4]
-# y = [0,1,-1,2,-2]
+x_star = 2.66666667
 
-# x = [0,1.7,3.4,5.1,6.8,8.5]
-# y = [0.4713,1.0114,1.5515,2.0916,2.6317,3.1718]
+x = [0,1,2,3,4]
+y = [0,1.8415,2.9093,3.1411,3.2432]
 
-def make_spline_matrix(x, y, n, err=10**-10, text=False, X=None):
-    # сделаем матрицу коэф а размерности n+1
-    A, b, n = [], [], n+1
-    for i in range(n):
-        r = []
-        for j in range(n):
-            if i == 0 and j == 0:
-                r.append(len(x))
-            else:
-                r.append(sum(map(lambda a: pow(a,i+j),x)))
-        A.append(r)
-        b.append(sum(map(lambda a,b: pow(a,i) * b,x,y)))
-    if text:
-        print('Matrix A and b')
-        for i in range(len(A)):
-            for j in range(len(A[i])):
-                print('{:.2f}'.format(A[i][j]), end='  ')
-            print('['+'{:.2f}'.format(b[i])+']')
-    # Теперь имея матрицу и правую часть решим ее зейделем с точностью err
-    a_,a = [None] * len(A),[0] * len(A)
-    while True:
-        for i in range(len(A)):
-            s = 0
-            for j in range(len(A)):
-                if j < i:
-                    s += A[i][j] * a_[j]
-                elif i != j:
-                    s += A[i][j] * a[j]
-            a_[i] = (b[i] - s) / A[i][i]
-        if sqrt(sum(map(lambda a,b: pow(a - b,2),a,a_))) < err:
-            break
-        a = copy.copy(a_)
-    if text:
-        print('f(x) = ', float('{:.4f}'.format(a_[0])), end='')
-        for i in range(1, len(a_)):
-            print(' +', str(float('{:.4f}'.format(a_[i]))) + '*x^' + str(i),end='')
+def display(A):
+    for row in A:
+        for i in range(len(row)):
+            print(row[i], end=' ')
         print()
-    # теперь сделаем итоговые координаты
-    resx,resy = [],[]
-    start = x[0]
-    while start < x[-1]:
-        resx.append(start)
-        resy.append(sum([a_[j] * pow(start, j) for j in range(len(a_))]))
-        start += 0.1 # сделать другой step
-    # вычислим квадрат ошибок
-    if text:
-        yy = [sum([a_[j] * pow(num, j) for j in range(len(a_))]) for num in x]
-        print('error =', sqrt(sum(list(map(lambda a, b: pow(a - b,2), yy, y)))))
-    # возвратим результат
-    if X != None:
-        return sum([a_[j] * pow(X, j) for j in range(len(a_))])
-    else:
-        return resx, resy
 
-x_, y_ = make_spline_matrix(x, y, 3, err=10**-2, text=True)
+def display(A,b):
+    for i in range(len(A)):
+        for j in range(len(A[i])):
+            print('{:.2f}'.format(A[i][j]), end=' ')
+        print('[{:.2f}]'.format(b[i]))
 
-print('Y =', make_spline_matrix(x, y, 3, err=10**-2, text=False, X = x_star))
+def cubic_spline(x,y):
+    # матрица x, y и коэф a,b,c,d
+    A = []
+    for i in range(1, len(x)):
+        A.append([[x[i-1],x[i]],[y[i-1],y[i]],0,0,0,0])
+    # display(A)
+    # составим матрицу относительно c
+    n = len(x)
+    h = lambda it: x[it] - x[it-1]
+    f = lambda it: y[it]
+    M = []
+    b = []
+    for i in range(1,n+1):
+        r = [0] * (n)
+        M.append(r)
+        b.append(0)
+    for i in range(2,n+1):
+        if i == 2:
+            M[i][2] = 2 * (h(1) + h(2))
+            M[i][3] = h(2)
+            b[i] = 3 * ((f(2) - f(1)) / h(2) - (f(1) - f(0)) / h(1))
+        elif i == n:
+            M[n-1][n-2] = h(n-3)
+            M[n-1][n-1] = 2 * (h(n-2) + h(n-1))
+            b[n-1] = 3 * ((f(n-1) - f(n-2)) / h(n-1) - (f(n-2) - f(n-3)) / h(n-2))
+        # else:
+        #     M[i][i] = h(i-2)
+        #     M[i][i+1] = 2 * (h(i+1) + h(i))
+        #     M[i][i+2] = 5
+        #     b[i] = 3 * ((f(n-1) - f(n-2)) / h(n-1) - (f(n-2) - f(n-3)) / h(n-2))
+    display(M,b)
 
-plt.plot(x, y, label='main')
-plt.plot(x_, y_, label='spline')
-plt.legend()
-plt.show()
+
+
+
+cubic_spline(x,y)
+
+# plt.plot(x, y, label='main')
+# plt.plot(x_1, y_1, label='spline 1')
+# plt.legend()
+# plt.show()
