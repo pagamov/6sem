@@ -37,6 +37,7 @@ def mult(A, B):
             c_.append(elem)
         C.append(c_)
     return C
+
 def find_alpha_beta(A, B):
     size = len(A)
     alpha = [[0] * size for i in range(size)]

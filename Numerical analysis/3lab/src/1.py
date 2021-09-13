@@ -56,14 +56,14 @@ def Lagrange(X,x,y):
 # y = [ff(_) for _ in x]
 # print(Newton(1.5,x,y))
 
-plt.style.use('seaborn-poster')
+# plt.style.use('seaborn-poster')
 plt.plot(x_a, y_a, label='ctg')
 plt.plot(x_a, [Newton(_,x_a,y_a) for _ in x_a], label='Newton')
 plt.plot(x_a, [Lagrange(_,x_a,y_a)-0.1 for _ in x_a], label='Lagrange')
 plt.legend()
 plt.show()
 
-plt.style.use('seaborn-poster')
+# plt.style.use('seaborn-poster')
 plt.plot(x_b, y_b, label='ctg')
 plt.plot(x_b, [Newton(_,x_b,y_b) for _ in x_b], label='Newton')
 plt.plot(x_b, [Lagrange(_,x_b,y_b)-0.1 for _ in x_b], label='Lagrange')
